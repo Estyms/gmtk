@@ -7,6 +7,7 @@ public class UnitSo : ScriptableObject
     public int defense;
     public string description;
     public Sprite sprite;
+    public Sprite attackSprite;
     public Sprite icon;
 
     // variables for the unit life, attack, defense, speed, range, and cost
