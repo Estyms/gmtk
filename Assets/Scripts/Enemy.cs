@@ -1,14 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy : Unit
 {
     private GameState _gameState;
     private Unit _target;
+    [SerializeField] private SpriteRenderer hoverCircle;
 
     private void Start()
     {
         // Find Manager and get PlayerActions
         _gameState = GameObject.Find("Manager").GetComponent<GameState>();
+        hoverCircle.enabled = false;
     }
 
     private void Update()
@@ -26,5 +30,21 @@ public class Enemy : Unit
             _gameState.SetTurn(true);
             _target = null;
         }
+    }
+
+    public SpriteRenderer HoverCircle
+    {
+        get => hoverCircle;
+        set => hoverCircle = value;
+    }
+
+    public void OnMouseEnter()
+    {
+        hoverCircle.enabled = true;
+    }
+
+    public void OnMouseExit()
+    {
+        hoverCircle.enabled = false;
     }
 }

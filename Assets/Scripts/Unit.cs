@@ -46,6 +46,11 @@ public class Unit : MonoBehaviour
     // function Die that prints message "Unit died" and destroys game object
     private void Die()
     {
+        if (GetType() == typeof(Ally))
+        {
+            ((Ally)this).Effect.enabled = false;
+        }
+
         Debug.Log("Unit died");
         gameObject.SetActive(false);
         _isDead = true;
