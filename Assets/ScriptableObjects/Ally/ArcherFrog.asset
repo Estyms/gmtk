@@ -16,6 +16,7 @@ MonoBehaviour:
   defense: 2
   description: 
   sprite: {fileID: 568453645, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
+  attackSprite: {fileID: -965677667, guid: a084089d428d3a941b7760480041742b, type: 3}
   icon: {fileID: -1720390365, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
   health: 22
   nameString: Archer Frog
