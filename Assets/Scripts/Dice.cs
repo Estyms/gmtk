@@ -3,20 +3,12 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Dice : MonoBehaviour {
-    public class RollEventArgs : EventArgs
-    {
-        private readonly int _value;
+public class Dice : MonoBehaviour
+{
+    [SerializeField] private DiceSo die;
 
-        public RollEventArgs(int value)
-        {
-            this._value = value;
-        }
-        
-        public int Value => _value;
-    }
+    public bool isRolling;
 
-    public bool isRolling = false;
     // Array of dice sides sprites to load from Resources folder
     private Sprite[] _diceSides;
 
@@ -24,18 +16,18 @@ public class Dice : MonoBehaviour {
     private SpriteRenderer _rend;
     private int _result;
 
-    public event EventHandler<RollEventArgs> onDiceRoll;
-
-	// Use this for initialization
-	private void Start () {
-
+    // Use this for initialization
+    private void Start()
+    {
         // Assign Renderer component
         _rend = GetComponent<SpriteRenderer>();
 
         // Load dice sides sprites to array from DiceSides subfolder of Resources folder
-        _diceSides = Resources.LoadAll<Sprite>("DiceSides/");
-	}
-	
+        _diceSides = die.diceFaces;
+    }
+
+    public event EventHandler<RollEventArgs> OnDiceRoll;
+
     // If you left click over the dice then RollTheDice coroutine is started
     public void Roll()
     {
@@ -45,7 +37,7 @@ public class Dice : MonoBehaviour {
 
     public void RemoveListeners()
     {
-        onDiceRoll = null;
+        OnDiceRoll = null;
     }
 
     // Coroutine that rolls the dice
@@ -56,7 +48,7 @@ public class Dice : MonoBehaviour {
         for (int i = 0; i <= 14; i++)
         {
             // Pick up random value from 0 to 5 (All inclusive)
-            _result = Random.Range(0, 6);
+            _result = Random.Range(0, _diceSides.Length);
 
             // Set sprite to upper face of dice from array according to random value
             _rend.sprite = _diceSides[_result];
@@ -70,10 +62,20 @@ public class Dice : MonoBehaviour {
         _rend.sprite = _diceSides[_result];
 
         // Show final dice value in Console
-        Debug.Log(_result+1);
-        
-        onDiceRoll?.Invoke(this, new RollEventArgs(_result+1));
+        Debug.Log(_result + 1);
+
+        OnDiceRoll?.Invoke(this, new RollEventArgs(_result + 1));
         yield return new WaitForSeconds(1f);
         isRolling = false;
+    }
+
+    public class RollEventArgs : EventArgs
+    {
+        public RollEventArgs(int value)
+        {
+            Value = value;
+        }
+
+        public int Value { get; }
     }
 }

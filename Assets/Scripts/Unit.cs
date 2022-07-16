@@ -31,7 +31,7 @@ public class Unit : MonoBehaviour
         Dice dice = FindObjectOfType<Dice>();
         dice.RemoveListeners();
 
-        dice.onDiceRoll += (sender, args) =>
+        dice.OnDiceRoll += (sender, args) =>
         {
             if (args.Value > 0)
             {
@@ -48,7 +48,8 @@ public class Unit : MonoBehaviour
             gameState.EndTurn();
         };
 
-        dice.Roll();
+        // dice.Roll();
+        GameObject.Find("GameManager").GetComponent<DiceManager>().RollDices();
         Debug.Log("DONE");
     }
 
@@ -75,7 +76,7 @@ public class Unit : MonoBehaviour
         OnDie?.Invoke(this, new OnDieArgs(this));
         gameObject.SetActive(false);
     }
-    
+
     public void ResetHandlers()
     {
         OnAttack = null;
@@ -126,6 +127,4 @@ public class Unit : MonoBehaviour
 
         public Unit Deadguy { get; }
     }
-
-
 }
