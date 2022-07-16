@@ -29,7 +29,7 @@ public class PlayerActions : MonoBehaviour
                 }
             }
 
-            Debug.Log("selected unit is " + _selectedUnit.name);
+            Debug.Log("selected unit is " + _selectedUnit.GetName());
         }
     }
 

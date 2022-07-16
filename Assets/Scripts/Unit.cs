@@ -75,4 +75,9 @@ public class Unit : MonoBehaviour
     {
         return unitSo.icon;
     }
+
+    public string GetName()
+    {
+        return unitSo.nameString;
+    }
 }
