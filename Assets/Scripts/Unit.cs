@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -7,7 +8,6 @@ public class Unit : MonoBehaviour
     private int _currentHealth;
     private TextMeshProUGUI _healthText;
     private bool _isDead;
-    private int _speed;
 
     private void Awake()
     {
@@ -17,6 +17,8 @@ public class Unit : MonoBehaviour
         GetComponentInChildren<SpriteRenderer>().sprite = unitSo.sprite;
         _healthText.text = _currentHealth.ToString();
     }
+
+    public event EventHandler OnAttack;
 
     // function attack(Unit target) that deals damage to target
     public void Attack(Unit target)
@@ -32,6 +34,9 @@ public class Unit : MonoBehaviour
         {
             Debug.Log("Attack missed");
         }
+
+        // Invoke OnAttack()
+        OnAttack?.Invoke(this, EventArgs.Empty);
     }
 
     // function takeDamage(int damage) that reduces current health by damage minus armor and calls Die if health is 0 or less
@@ -68,7 +73,7 @@ public class Unit : MonoBehaviour
 
     public int GetSpeed()
     {
-        return _speed;
+        return unitSo.speed;
     }
 
     public Sprite GetSprite()
