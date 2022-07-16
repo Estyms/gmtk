@@ -19,7 +19,7 @@ public class PlayerActions : MonoBehaviour
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
-                    if (hit.collider != null)
+                    if (hit.collider)
                     {
                         if (hit.transform.GetComponent<Unit>().GetTeam() == 1)
                         {
