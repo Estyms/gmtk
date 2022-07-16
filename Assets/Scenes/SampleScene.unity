@@ -1075,7 +1075,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ae3865d19528b4dbc67d31a3303f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: {fileID: 1052207712}
 --- !u!4 &1052207710
 Transform:
   m_ObjectHideFlags: 0
@@ -1121,9 +1120,9 @@ MonoBehaviour:
   - {fileID: 1925025408}
   - {fileID: 1788789600}
   - {fileID: 1184218690}
-  fightLoader: {fileID: 241835229}
   speedManager: {fileID: 1052207711}
   _turnText: {fileID: 1615301777}
+  fightLoader: {fileID: 241835229}
 --- !u!114 &1184218690 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2641564171181394140, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}

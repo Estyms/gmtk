@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ally : Unit
 {
@@ -12,25 +11,16 @@ public class Ally : Unit
         selectCircle.enabled = false;
     }
 
-    public SpriteRenderer Effect
+    public void SetSelected(bool selected)
     {
-        get => selectCircle;
-        set => selectCircle = value;
+        selectCircle.enabled = selected;
     }
-
-    public SpriteRenderer HoverCircle
+    
+    // override Attack()
+    public override void Attack(Unit target, GameState gameState)
     {
-        get => hoverCircle;
-        set => hoverCircle = value;
-    }
-
-    private void OnMouseEnter()
-    { 
-        if (!selectCircle.enabled) hoverCircle.enabled = true;
-    }
-
-    private void OnMouseExit()
-    {
-        hoverCircle.enabled = false;
+        // call base Attack()
+        base.Attack(target, gameState);
+        SetSelected(false);
     }
 }

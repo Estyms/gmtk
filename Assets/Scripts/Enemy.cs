@@ -1,12 +1,16 @@
-﻿using System;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
 public class Enemy : Unit
 {
+    [SerializeField] private SpriteRenderer hoverCircle;
     private GameState _gameState;
     private Unit _target;
-    [SerializeField] private SpriteRenderer hoverCircle;
+
+    public SpriteRenderer HoverCircle
+    {
+        get => hoverCircle;
+        set => hoverCircle = value;
+    }
 
     private void Start()
     {
@@ -17,17 +21,7 @@ public class Enemy : Unit
 
     private void Update()
     {
-        if (!_gameState.IsMyTurn && !
-                FindObjectOfType<Dice>().isRolling)
-        {
-            _gameState.EnemyAttack(this);
-        }
-    }
-
-    public SpriteRenderer HoverCircle
-    {
-        get => hoverCircle;
-        set => hoverCircle = value;
+        if (!_gameState.IsMyTurn && !FindObjectOfType<Dice>().isRolling && _canAttack) _gameState.EnemyAttack(this);
     }
 
     public void OnMouseEnter()

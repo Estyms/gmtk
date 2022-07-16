@@ -17,4 +17,5 @@ public class UnitSo : ScriptableObject
     public string nameString;
     public int speed;
     public int team;
+    public bool canAttack = false;
 }

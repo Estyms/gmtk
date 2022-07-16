@@ -1,25 +1,14 @@
 ﻿using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
     [SerializeField] private UnitSo unitSo;
+    protected bool _canAttack;
     private int _currentHealth;
     private TextMeshProUGUI _healthText;
     private bool _isDead;
-
-    public class OnDieArgs : EventArgs
-    {
-        private Unit deadguy;
-        public OnDieArgs(Unit deadguy)
-        {
-            this.deadguy = deadguy;
-        }
-
-        public Unit Deadguy => deadguy;
-    }
 
     private void Awake()
     {
@@ -34,8 +23,10 @@ public class Unit : MonoBehaviour
     public event EventHandler<OnDieArgs> OnDie;
 
     // function attack(Unit target) that deals damage to target
-    public void Attack(Unit target, GameState gameState)
+    public virtual void Attack(Unit target, GameState gameState)
     {
+        if (!_canAttack) return;
+        _canAttack = false;
         // Find Dice and call Roll()
         Dice dice = FindObjectOfType<Dice>();
         dice.RemoveListeners();
@@ -56,13 +47,9 @@ public class Unit : MonoBehaviour
             OnAttack?.Invoke(this, EventArgs.Empty);
             gameState.EndTurn();
         };
-        
-        
+
         dice.Roll();
         Debug.Log("DONE");
-
-
-
     }
 
     // function takeDamage(int damage) that reduces current health by damage minus armor and calls Die if health is 0 or less
@@ -79,15 +66,14 @@ public class Unit : MonoBehaviour
     {
         if (GetType() == typeof(Ally))
         {
-            var ally = (Ally)this;
-            ally.Effect.enabled = false;
+            Ally ally = (Ally)this;
+            // ally.Effect.enabled = false;
         }
 
         _isDead = true;
         Debug.Log("Unit died");
         OnDie?.Invoke(this, new OnDieArgs(this));
         gameObject.SetActive(false);
-        
     }
 
     public int GetTeam()
@@ -118,5 +104,20 @@ public class Unit : MonoBehaviour
     public string GetName()
     {
         return unitSo.nameString;
+    }
+
+    public void SetCanAttack(bool canAttack)
+    {
+        _canAttack = canAttack;
+    }
+
+    public class OnDieArgs : EventArgs
+    {
+        public OnDieArgs(Unit deadguy)
+        {
+            Deadguy = deadguy;
+        }
+
+        public Unit Deadguy { get; }
     }
 }
