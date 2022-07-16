@@ -1,5 +1,6 @@
 ﻿using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -26,17 +27,27 @@ public class Unit : MonoBehaviour
     {
         // Find Dice and call Roll()
         Dice dice = FindObjectOfType<Dice>();
-        if (dice.Roll() > 3)
+        dice.RemoveListeners();
+        dice.onDiceRoll += (sender, args) =>
         {
-            target.TakeDamage(unitSo.attack);
-            Debug.Log("Attacked " + target.name);
-        }
-        else
-        {
-            Debug.Log("Attack missed");
-        }
+            if (args.Value > 3)
+            {
+                target.TakeDamage(unitSo.attack);
+                Debug.Log("Attacked " + target.name);
+            }
+            else
+            {
+                Debug.Log("Attack missed");
+            }
 
-        OnAttack?.Invoke(this, EventArgs.Empty);
+            // Invoke OnAttack()
+            OnAttack?.Invoke(this, EventArgs.Empty);
+        };
+        dice.Roll();
+        Debug.Log("DONE");
+
+
+
     }
 
     // function takeDamage(int damage) that reduces current health by damage minus armor and calls Die if health is 0 or less
@@ -51,12 +62,15 @@ public class Unit : MonoBehaviour
     // function Die that prints message "Unit died" and destroys game object
     private void Die()
     {
-        if (GetType() == typeof(Ally)) ((Ally)this).Effect.enabled = false;
+        if (GetType() == typeof(Ally))
+        {
+            var ally = (Ally)this;
+            ally.Effect.enabled = false;
+        }
 
         Debug.Log("Unit died");
         gameObject.SetActive(false);
         _isDead = true;
-        OnDie?.Invoke(this, EventArgs.Empty);
     }
 
     public int GetTeam()

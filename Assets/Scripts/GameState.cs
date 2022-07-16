@@ -69,8 +69,10 @@ public class GameState : MonoBehaviour
         
         // Attack the target
         enemy.Attack(target);
-        
-        // Compute next state
+
+        if (_selectedUnit.IsDead()) _selectedUnit = null;
+
+            // Compute next state
         NextState();
         
         // Give back the hand to the player
