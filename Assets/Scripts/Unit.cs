@@ -75,6 +75,12 @@ public class Unit : MonoBehaviour
         OnDie?.Invoke(this, new OnDieArgs(this));
         gameObject.SetActive(false);
     }
+    
+    public void ResetHandlers()
+    {
+        OnAttack = null;
+        OnDie = null;
+    }
 
     public int GetTeam()
     {
@@ -120,4 +126,6 @@ public class Unit : MonoBehaviour
 
         public Unit Deadguy { get; }
     }
+
+
 }

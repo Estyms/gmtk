@@ -19,11 +19,14 @@ public class SpeedManager : MonoBehaviour
         _units = gameState.UnitsAlly.Where(x=>!x.IsDead()).ToArray().Concat(gameState.UnitsEnemy).ToArray();
         foreach (var unit in _units)
         {
+            unit.SetCanAttack(false);
+            if(unit.GetType() == typeof(Ally)) ((Ally)unit).SetSelected(false);
             Debug.Log("SPEEDMANAGER " + unit.name);
         }
         // subscribe to the event OnAttack
         foreach (Unit unit in _units)
         {
+            unit.ResetHandlers();
             unit.OnAttack += OnAttack;
             unit.OnDie += OnDie;
         }

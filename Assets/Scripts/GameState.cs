@@ -47,9 +47,9 @@ public class GameState : MonoBehaviour
             State = StateEnum.Fight;
             SetTurn(true);
             speedManager.InitFight(this);
+            
         };
         fightLoader.NextFight(this);
-        foreach (Unit unit in UnitsEnemy) Debug.Log(unit.name);
     }
 
     // get delted by MOI
@@ -103,7 +103,6 @@ public class GameState : MonoBehaviour
                     speedManager.InitFight(this);
                 };
                 fightLoader.NextFight(this);
-
                 break;
         }
     }
