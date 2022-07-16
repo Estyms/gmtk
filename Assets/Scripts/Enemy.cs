@@ -20,15 +20,7 @@ public class Enemy : Unit
         if (!_gameState.IsMyTurn && !
                 FindObjectOfType<Dice>().isRolling)
         {
-            while (_target == null)
-            {
-                int random = Random.Range(0, _gameState.unitsAlly.Length);
-                if (!_gameState.unitsAlly[random].IsDead()) _target = _gameState.unitsAlly[random];
-            }
-
-            Attack(_target);
-            _gameState.SetTurn(true);
-            _target = null;
+            _gameState.EnemyAttack(this);
         }
     }
 
