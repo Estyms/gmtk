@@ -10,6 +10,17 @@ public class Unit : MonoBehaviour
     private TextMeshProUGUI _healthText;
     private bool _isDead;
 
+    public class OnDieArgs : EventArgs
+    {
+        private Unit deadguy;
+        public OnDieArgs(Unit deadguy)
+        {
+            this.deadguy = deadguy;
+        }
+
+        public Unit Deadguy => deadguy;
+    }
+
     private void Awake()
     {
         _currentHealth = unitSo.health;
@@ -20,17 +31,18 @@ public class Unit : MonoBehaviour
     }
 
     public event EventHandler OnAttack;
-    public event EventHandler OnDie;
+    public event EventHandler<OnDieArgs> OnDie;
 
     // function attack(Unit target) that deals damage to target
-    public void Attack(Unit target)
+    public void Attack(Unit target, GameState gameState)
     {
         // Find Dice and call Roll()
         Dice dice = FindObjectOfType<Dice>();
         dice.RemoveListeners();
+
         dice.onDiceRoll += (sender, args) =>
         {
-            if (args.Value > 3)
+            if (args.Value > 0)
             {
                 target.TakeDamage(unitSo.attack);
                 Debug.Log("Attacked " + target.name);
@@ -42,7 +54,10 @@ public class Unit : MonoBehaviour
 
             // Invoke OnAttack()
             OnAttack?.Invoke(this, EventArgs.Empty);
+            gameState.EndTurn();
         };
+        
+        
         dice.Roll();
         Debug.Log("DONE");
 
@@ -68,9 +83,11 @@ public class Unit : MonoBehaviour
             ally.Effect.enabled = false;
         }
 
-        Debug.Log("Unit died");
-        gameObject.SetActive(false);
         _isDead = true;
+        Debug.Log("Unit died");
+        OnDie?.Invoke(this, new OnDieArgs(this));
+        gameObject.SetActive(false);
+        
     }
 
     public int GetTeam()

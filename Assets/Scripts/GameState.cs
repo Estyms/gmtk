@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,6 +16,8 @@ public class GameState : MonoBehaviour
         Lose = 2
     }
     
+    public event EventHandler onEndTurn;
+
     // Properties
     public Unit[] unitsAlly, unitsEnemy;
     private StateEnum _state = StateEnum.Fight;
@@ -44,14 +48,18 @@ public class GameState : MonoBehaviour
 
     public void AllyAttack(Unit enemy)
     {
+        // Setup event
+        onEndTurn = null;
+        onEndTurn += (sender, args) =>
+        {
+            NextState();
+            SetTurn(false);
+            Debug.Log("ALLY END TURN " + _state);
+        };
+        
         // Attack the clicked enemy
-        _selectedUnit.Attack(enemy);
-        
-        // Compute the next state
-        NextState();
-        
-        // Give hand to the enemy
-        SetTurn(false);
+        _selectedUnit.Attack(enemy, this);
+
     }
 
     public void EnemyAttack(Unit enemy)
@@ -67,16 +75,26 @@ public class GameState : MonoBehaviour
             if (!unitsAlly[random].IsDead()) target = unitsAlly[random];
         }
         
-        // Attack the target
-        enemy.Attack(target);
-
-        if (_selectedUnit.IsDead()) _selectedUnit = null;
-
-            // Compute next state
-        NextState();
         
-        // Give back the hand to the player
-        SetTurn(true);
+        
+        // Setup Event
+        onEndTurn = null;
+        onEndTurn += (sender, args) =>
+        {
+            if (_selectedUnit.IsDead()) _selectedUnit = null;
+            // Compute next state
+            NextState();
+            // Give back the hand to the player
+            SetTurn(true);
+            Debug.Log("ENEMY END TURN " + _state);
+        };
+        // Attack the target
+        enemy.Attack(target, this);
+    }
+
+    public void EndTurn()
+    {
+        onEndTurn?.Invoke(this, EventArgs.Empty);
     }
     
     

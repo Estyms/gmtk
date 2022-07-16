@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +9,10 @@ public class SpeedManager : MonoBehaviour
 {
     [SerializeField] private RectTransform orderPanel;
     [SerializeField] private Image imageUnit;
+    private Image[] _imageUnits = {}; 
 
     private Unit[] _units;
-    // suscribe to the event OnAttack
+    // subscribe to the event OnAttack
 
     private void Start()
     {
@@ -25,14 +28,26 @@ public class SpeedManager : MonoBehaviour
         Order();
     }
 
-    private void OnDie(object sender, EventArgs e)
+    private void ClearArray()
     {
-        // orderPanel.GetChild(0)
+        foreach (Transform child in orderPanel)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void OnDie(object sender, Unit.OnDieArgs e)
+    {
+        _units = _units.Where(x => x != e.Deadguy).ToArray();
+        ClearArray();
+        Display();
     }
 
     private void OnAttack(object sender, EventArgs e)
     {
         // push the array of units to the end of the queue
+        ClearArray();
+        Shift();
         Display();
     }
 
@@ -46,11 +61,25 @@ public class SpeedManager : MonoBehaviour
         {
             Image image = Instantiate(imageUnit, orderPanel);
             image.sprite = unit.GetIcon();
+            _imageUnits = _imageUnits.Concat(new []{image}).ToArray();
         }
     }
 
     private void Display()
     {
-        orderPanel.GetChild(0).SetAsLastSibling();
+        foreach (Unit unit in _units)
+        {
+            Image image = Instantiate(imageUnit, orderPanel);
+            image.sprite = unit.GetIcon();
+            _imageUnits = _imageUnits.Concat(new []{image}).ToArray();
+        }
+    }
+
+    private void Shift()
+    {
+        var first = _units[0];
+        var newArray = new Unit[_units.Length-1];
+        Array.Copy(_units,1, newArray, 0, _units.Length - 1);
+        _units = newArray.Concat(new[] { first }).ToArray();
     }
 }
