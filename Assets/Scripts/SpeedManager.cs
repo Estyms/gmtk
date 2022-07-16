@@ -16,8 +16,18 @@ public class SpeedManager : MonoBehaviour
         // _units = UnitsAlly and UnitsEnemy from component PlayerActions
         _units = GetComponent<GameState>().unitsAlly.Concat(GetComponent<GameState>().unitsEnemy).ToArray();
         // subscribe to the event OnAttack
-        foreach (Unit unit in _units) unit.OnAttack += OnAttack;
+        foreach (Unit unit in _units)
+        {
+            unit.OnAttack += OnAttack;
+            unit.OnDie += OnDie;
+        }
+
         Order();
+    }
+
+    private void OnDie(object sender, EventArgs e)
+    {
+        // orderPanel.GetChild(0)
     }
 
     private void OnAttack(object sender, EventArgs e)
