@@ -464,17 +464,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213929287}
   m_CullTransparentMesh: 1
---- !u!114 &325192183 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4370733742904466774, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
-  m_PrefabInstance: {fileID: 4370733742654772385}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6abbc2a1c4941e09c5824a5751b0aad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &431902311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -482,6 +471,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2641564171181394140, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
+      propertyPath: unitSo
+      value: 
+      objectReference: {fileID: 11400000, guid: f1810ab49f74cef43a335dbfe8067136, type: 2}
     - target: {fileID: 4370733742904466772, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
       propertyPath: m_Name
       value: Ally (2)
@@ -874,17 +867,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cd3d60c4ddfbdd498ba1c3c4d5c3822, type: 3}
---- !u!114 &873323638 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4370733742904466774, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
-  m_PrefabInstance: {fileID: 431902311}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6abbc2a1c4941e09c5824a5751b0aad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1052207707
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,15 +898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ae3865d19528b4dbc67d31a3303f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnText: {fileID: 1615301777}
-  unitsAlly:
-  - {fileID: 325192183}
-  - {fileID: 1788789597}
-  - {fileID: 873323638}
-  unitsEnemy:
-  - {fileID: 1575913791}
-  - {fileID: 1481099185}
-  - {fileID: 179907694}
+  _gameState: {fileID: 1052207712}
 --- !u!4 &1052207710
 Transform:
   m_ObjectHideFlags: 0
@@ -967,13 +941,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitsAlly:
-  - {fileID: 325192183}
-  - {fileID: 1788789597}
-  - {fileID: 873323638}
+  - {fileID: 1925025408}
+  - {fileID: 1788789600}
+  - {fileID: 1184218690}
   unitsEnemy:
   - {fileID: 1575913791}
   - {fileID: 1481099185}
   - {fileID: 179907694}
+  _turnText: {fileID: 1615301777}
+--- !u!114 &1184218690 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2641564171181394140, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
+  m_PrefabInstance: {fileID: 431902311}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea0832d43a54dd58aa8b35001b47958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1190342756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,15 +1184,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615301775}
   m_CullTransparentMesh: 1
---- !u!114 &1788789597 stripped
+--- !u!114 &1788789600 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4370733742904466774, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2641564171181394140, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
   m_PrefabInstance: {fileID: 1989885178}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6abbc2a1c4941e09c5824a5751b0aad, type: 3}
+  m_Script: {fileID: 11500000, guid: eea0832d43a54dd58aa8b35001b47958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1925025408 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2641564171181394140, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
+  m_PrefabInstance: {fileID: 4370733742654772385}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea0832d43a54dd58aa8b35001b47958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1989885178
@@ -1216,6 +1213,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2641564171181394140, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
+      propertyPath: unitSo
+      value: 
+      objectReference: {fileID: 11400000, guid: ea07d6945a1372a4c9cda0bd23a6e364, type: 2}
     - target: {fileID: 4370733742904466772, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
       propertyPath: m_Name
       value: Ally (1)
@@ -1277,6 +1278,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2641564171181394140, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
+      propertyPath: unitSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 51696b639e96d024995705c7964aa17f, type: 2}
     - target: {fileID: 4370733742904466772, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
       propertyPath: m_Name
       value: Ally
