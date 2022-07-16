@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
 {
-    [SerializeField] private GameState _gameState;
+    [SerializeField] private GameState gameState;
 
 
     // Update is called once per frame
     private void Update()
     {
-        switch (_gameState.State)
+        switch (gameState.State)
         {
             case GameState.StateEnum.Fight:
             {
@@ -23,21 +23,21 @@ public class PlayerActions : MonoBehaviour
                     {
                         if (hit.transform.GetComponent<Unit>().GetTeam() == 1)
                         {
-                            _gameState.SelectedUnit = hit.transform.GetComponent<Ally>();
+                            gameState.SelectedUnit = hit.transform.GetComponent<Ally>();
                         }
-                        else if (hit.transform.GetComponent<Unit>().GetTeam() == 2 && _gameState.IsMyTurn &&
-                                 _gameState.SelectedUnit != null)
+                        else if (hit.transform.GetComponent<Unit>().GetTeam() == 2 && gameState.IsMyTurn &&
+                                 gameState.SelectedUnit != null)
                         {
-                            _gameState.AllyAttack(hit.transform.GetComponent<Unit>());
+                            gameState.AllyAttack(hit.transform.GetComponent<Unit>());
                         }
 
-                        Debug.Log("selected unit is " + _gameState.SelectedUnit.GetName());
+                        Debug.Log("selected unit is " + gameState.SelectedUnit.GetName());
                     }
                 }
             } break;
             
             default:
-                _gameState.EndFight();
+                gameState.EndFight();
                 break;
         }
     }

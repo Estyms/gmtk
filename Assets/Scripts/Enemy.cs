@@ -11,7 +11,7 @@ public class Enemy : Unit
     private void Start()
     {
         // Find Manager and get PlayerActions
-        _gameState = GameObject.Find("Manager").GetComponent<GameState>();
+        _gameState = GameObject.Find("GameManager").GetComponent<GameState>();
         hoverCircle.enabled = false;
     }
 
