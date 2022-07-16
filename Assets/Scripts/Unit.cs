@@ -28,12 +28,17 @@ public class Unit : MonoBehaviour
         if (!_canAttack) return;
         _canAttack = false;
         // Find Dice and call Roll()
-        Dice dice = FindObjectOfType<Dice>();
-        dice.RemoveListeners();
-
-        dice.OnDiceRoll += (sender, args) =>
+        DiceManager diceManager = GameObject.Find("GameManager").GetComponent<DiceManager>();
+        diceManager.ClearListeners();
+        diceManager.OnDoneRollDices += (_, args) =>
         {
-            if (args.Value > 0)
+            var number = 0;
+            foreach (var (dice,pValue) in args.Values)
+            {
+                if (dice.DiceType == DiceSo.DiceType.Number) number = pValue;
+            }
+            Debug.Log(number);
+            if (number > 3)
             {
                 target.TakeDamage(unitSo.attack);
                 Debug.Log("Attacked " + target.name);
@@ -49,7 +54,7 @@ public class Unit : MonoBehaviour
         };
 
         // dice.Roll();
-        GameObject.Find("GameManager").GetComponent<DiceManager>().RollDices();
+        diceManager.RollDices();
         Debug.Log("DONE");
     }
 

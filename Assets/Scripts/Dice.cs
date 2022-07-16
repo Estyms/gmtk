@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -25,23 +26,16 @@ public class Dice : MonoBehaviour
         // Load dice sides sprites to array from DiceSides subfolder of Resources folder
         _diceSides = die.diceFaces;
     }
-
-    public event EventHandler<RollEventArgs> OnDiceRoll;
-
+    
     // If you left click over the dice then RollTheDice coroutine is started
-    public void Roll()
+    public void Roll(DiceManager diceManager)
     {
         isRolling = true;
-        StartCoroutine("RollTheDice");
-    }
-
-    public void RemoveListeners()
-    {
-        OnDiceRoll = null;
+        StartCoroutine(RollTheDice(diceManager));
     }
 
     // Coroutine that rolls the dice
-    private IEnumerator RollTheDice()
+    private IEnumerator RollTheDice(DiceManager diceManager)
     {
         // Loop to switch dice sides ramdomly
         // before final side appears. 20 itterations here.
@@ -61,12 +55,8 @@ public class Dice : MonoBehaviour
         // for player movement for example
         _rend.sprite = _diceSides[_result];
 
-        // Show final dice value in Console
-        Debug.Log(_result + 1);
-
-        OnDiceRoll?.Invoke(this, new RollEventArgs(_result + 1));
         yield return new WaitForSeconds(1f);
-        isRolling = false;
+        diceManager.CallRollDicesListeners(new DiceManager.DiceArgs(_result+1, this));
     }
 
     public class RollEventArgs : EventArgs
@@ -78,4 +68,6 @@ public class Dice : MonoBehaviour
 
         public int Value { get; }
     }
+
+    public DiceSo.DiceType DiceType => die.diceType;
 }

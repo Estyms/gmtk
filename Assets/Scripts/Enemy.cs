@@ -21,7 +21,7 @@ public class Enemy : Unit
 
     private void Update()
     {
-        if (!_gameState.IsMyTurn && !FindObjectOfType<Dice>().isRolling && _canAttack) _gameState.EnemyAttack(this);
+        if (!_gameState.IsMyTurn && !FindObjectOfType<DiceManager>().Rolling && _canAttack) _gameState.EnemyAttack(this);
     }
 
     public void OnMouseEnter()

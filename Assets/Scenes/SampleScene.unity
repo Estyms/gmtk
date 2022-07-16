@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4a6da9b9943fc43a438cd1e4037fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  die: {fileID: 0}
+  die: {fileID: 11400000, guid: 0d1d1e89810ec6d4d98086a3bb1e8d67, type: 2}
   isRolling: 0
 --- !u!212 &135096159
 SpriteRenderer:
@@ -1101,7 +1101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4a6da9b9943fc43a438cd1e4037fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  die: {fileID: 0}
+  die: {fileID: 11400000, guid: 80a1ad983718a634c9e0861b50f7731e, type: 2}
   isRolling: 0
 --- !u!212 &620718612
 SpriteRenderer:
