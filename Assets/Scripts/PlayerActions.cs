@@ -1,12 +1,12 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _turnText;
-    public Unit[] unitsAlly, unitsEnemy;
-    private bool _isMyTurn = true;
-    private Unit _selectedUnit;
+    
+    [SerializeField] private GameState _gameState;
+
 
     // Update is called once per frame
     private void Update()
@@ -20,27 +20,14 @@ public class PlayerActions : MonoBehaviour
             {
                 if (hit.transform.GetComponent<Unit>().GetTeam() == 1)
                 {
-                    _selectedUnit = hit.transform.GetComponent<Unit>();
+                    _gameState.SelectedUnit = hit.transform.GetComponent<Ally>();
                 }
-                else if (hit.transform.GetComponent<Unit>().GetTeam() == 2 && _isMyTurn && _selectedUnit != null)
+                else if (hit.transform.GetComponent<Unit>().GetTeam() == 2 && _gameState.IsMyTurn && _gameState.SelectedUnit != null)
                 {
-                    _selectedUnit.Attack(hit.transform.GetComponent<Unit>());
-                    SetTurn(false);
+                    _gameState.Attack(hit.transform.GetComponent<Unit>());
                 }
+                Debug.Log("selected unit is " + _gameState.SelectedUnit.GetName());
             }
-
-            Debug.Log("selected unit is " + _selectedUnit.GetName());
         }
-    }
-
-    public void SetTurn(bool isMyTurn)
-    {
-        _isMyTurn = isMyTurn;
-        _turnText.text = isMyTurn ? "Your turn" : "Enemy turn";
-    }
-    
-    public bool GetTurn()
-    {
-        return _isMyTurn;
     }
 }

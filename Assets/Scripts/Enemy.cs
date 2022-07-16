@@ -2,27 +2,29 @@
 
 public class Enemy : Unit
 {
-    private PlayerActions _playerActions;
+    private GameState _gameState;
     private Unit _target;
 
     private void Start()
     {
         // Find Manager and get PlayerActions
-        _playerActions = GameObject.Find("Manager").GetComponent<PlayerActions>();
+        _gameState = GameObject.Find("Manager").GetComponent<GameState>();
     }
 
     private void Update()
     {
-        if (!_playerActions.GetTurn() && !FindObjectOfType<Dice>().isRolling)
+        if (!_gameState.IsMyTurn && !
+                FindObjectOfType<Dice>().isRolling)
         {
             while (_target == null)
             {
-                int random = Random.Range(0, _playerActions.unitsAlly.Length);
-                if (!_playerActions.unitsAlly[random].IsDead()) _target = _playerActions.unitsAlly[random];
+                int random = Random.Range(0, _gameState.unitsAlly.Length);
+                if (!_gameState.unitsAlly[random].IsDead()) _target = _gameState.unitsAlly[random];
             }
 
             Attack(_target);
-            _playerActions.SetTurn(true);
+            _gameState.SetTurn(true);
+            _target = null;
         }
     }
 }

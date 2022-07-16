@@ -18,6 +18,6 @@ MonoBehaviour:
   sprite: {fileID: 568453645, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
   icon: {fileID: -1720390365, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
   health: 22
-  nameString: Ally name string
+  nameString: Archer Frog
   speed: 13
   team: 1

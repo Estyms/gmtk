@@ -12,7 +12,7 @@ public class SpeedManager : MonoBehaviour
     private void Awake()
     {
         // _units = UnitsAlly and UnitsEnemy from component PlayerActions
-        _units = GetComponent<PlayerActions>().unitsAlly.Concat(GetComponent<PlayerActions>().unitsEnemy).ToArray();
+        _units = GetComponent<GameState>().unitsAlly.Concat(GetComponent<GameState>().unitsEnemy).ToArray();
     }
 
     private void Start()
