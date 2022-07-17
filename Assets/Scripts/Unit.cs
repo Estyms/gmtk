@@ -5,10 +5,14 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     [SerializeField] private UnitSo unitSo;
-    protected bool _canAttack;
+    private SpriteRenderer _backGround;
     private int _currentHealth;
+    private Transform[] _fightPositions;
     private TextMeshProUGUI _healthText;
     private bool _isDead;
+    private Vector3[] _oldFightPositions;
+    private Sprite _sprite;
+    protected bool CanAttack;
 
     private void Awake()
     {
@@ -19,14 +23,39 @@ public class Unit : MonoBehaviour
         _healthText.text = _currentHealth.ToString();
     }
 
+    protected virtual void Start()
+    {
+        _backGround = GameObject.Find("backGround").GetComponent<SpriteRenderer>();
+        _fightPositions = new Transform[2];
+        _oldFightPositions = new Vector3[2];
+        _fightPositions[0] = GameObject.Find("AllyFightPosition").transform;
+        _fightPositions[1] = GameObject.Find("EnemyFightPosition").transform;
+    }
+
     public event EventHandler OnAttack;
     public event EventHandler<OnDieArgs> OnDie;
 
     // function attack(Unit target) that deals damage to target
     public virtual void Attack(Unit target, GameState gameState)
     {
-        if (!_canAttack) return;
-        _canAttack = false;
+        if (!CanAttack) return;
+        GetComponentInChildren<SpriteRenderer>().sprite = unitSo.attackSprite;
+        // set background layer order to 1
+        _backGround.sortingOrder = 1;
+        GetComponentInChildren<SpriteRenderer>().sortingOrder = 3;
+        target.GetComponentInChildren<SpriteRenderer>().sortingOrder = 2;
+
+        int unitPos = GetTeam() - 1;
+        int targetPos = target.GetTeam() - 1;
+
+        _oldFightPositions[unitPos] = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        _oldFightPositions[targetPos] = new Vector3(target.transform.position.x, target.transform.position.y,
+            target.transform.position.z);
+
+        transform.position = _fightPositions[unitPos].position;
+        target.transform.position = _fightPositions[targetPos].position;
+
+        CanAttack = false;
         // Find Dice and call Roll()
         DiceManager diceManager = GameObject.Find("GameManager").GetComponent<DiceManager>();
         diceManager.ClearListeners();
@@ -47,6 +76,15 @@ public class Unit : MonoBehaviour
             {
                 Debug.Log("Attack missed");
             }
+
+            GetComponentInChildren<SpriteRenderer>().sprite = unitSo.sprite;
+            _backGround.sortingOrder = -1;
+            GetComponentInChildren<SpriteRenderer>().sortingOrder = 0;
+            target.GetComponentInChildren<SpriteRenderer>().sortingOrder = 0;
+
+
+            transform.position = _oldFightPositions[unitPos];
+            target.transform.position = _oldFightPositions[targetPos];
 
             // Invoke OnAttack()
             OnAttack?.Invoke(this, EventArgs.Empty);
@@ -120,7 +158,7 @@ public class Unit : MonoBehaviour
 
     public void SetCanAttack(bool canAttack)
     {
-        _canAttack = canAttack;
+        CanAttack = canAttack;
     }
 
     public class OnDieArgs : EventArgs

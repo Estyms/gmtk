@@ -501,4 +501,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitSo: {fileID: 11400000, guid: 7fb4f896ad4fa4648b3bf609876614fe, type: 2}
+  _fightPositions: []
   hoverCircle: {fileID: 2559630360761216715}

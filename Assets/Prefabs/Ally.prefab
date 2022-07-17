@@ -235,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitSo: {fileID: 0}
+  _fightPositions: []
   selectCircle: {fileID: 2713162234937430541}
   hoverCircle: {fileID: 5251826258006518}
 --- !u!61 &4370733742904466777

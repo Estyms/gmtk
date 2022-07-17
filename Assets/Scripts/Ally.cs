@@ -5,8 +5,9 @@ public class Ally : Unit
     [SerializeField] private SpriteRenderer selectCircle;
     [SerializeField] private SpriteRenderer hoverCircle;
 
-    public void Start()
+    protected new void Start()
     {
+        base.Start();
         hoverCircle.enabled = false;
         selectCircle.enabled = false;
     }

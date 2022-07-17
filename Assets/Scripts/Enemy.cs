@@ -12,8 +12,9 @@ public class Enemy : Unit
         set => hoverCircle = value;
     }
 
-    private void Start()
+    protected new void Start()
     {
+        base.Start();
         // Find Manager and get PlayerActions
         _gameState = GameObject.Find("GameManager").GetComponent<GameState>();
         hoverCircle.enabled = false;
@@ -21,7 +22,7 @@ public class Enemy : Unit
 
     private void Update()
     {
-        if (!_gameState.IsMyTurn && !FindObjectOfType<DiceManager>().Rolling && _canAttack) _gameState.EnemyAttack(this);
+        if (!_gameState.IsMyTurn && !FindObjectOfType<DiceManager>().Rolling && CanAttack) _gameState.EnemyAttack(this);
     }
 
     public void OnMouseEnter()
