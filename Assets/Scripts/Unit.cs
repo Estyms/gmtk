@@ -117,7 +117,7 @@ public class Unit : MonoBehaviour
     // function takeDamage(int damage) that reduces current health by damage minus armor and calls Die if health is 0 or less
     public void TakeDamage(int damage)
     {
-        _currentHealth -= damage - unitSo.defense;
+        _currentHealth -= Math.Max(0,damage - unitSo.defense);
         Debug.Log("Took " + (damage - unitSo.defense) + " damage");
         _healthText.text = _currentHealth.ToString();
         if (_currentHealth <= 0) Die();
