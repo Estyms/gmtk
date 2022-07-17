@@ -26,9 +26,9 @@ public class Ally : Unit
         SetSelected(false);
     }
 
-    public override void Heal(GameState gameState, int value)
+    public override void Heal(int value)
     {
-        base.Heal(gameState, value);
+        base.Heal(value);
         SetSelected(false);
     }
 }

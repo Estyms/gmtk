@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,30 +17,44 @@ public class Dice : MonoBehaviour
     // Reference to sprite renderer to change sprites
     private SpriteRenderer _rend;
     private int _result;
+    private SpriteRenderer _hover;
+    
+    public event EventHandler<RollEventArgs> OnDoneRoll;
 
+
+    private void OnMouseEnter() => _hover.enabled = true;
+
+    private void OnMouseExit() => _hover.enabled = false;
+    
     // Use this for initialization
     private void Start()
     {
         // Assign Renderer component
         _rend = GetComponent<SpriteRenderer>();
+        _hover = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         // Load dice sides sprites to array from DiceSides subfolder of Resources folder
         _diceSides = die.diceFaces;
     }
 
 
-    // If you left click over the dice then RollTheDice coroutine is started
-    public void Roll(DiceManager diceManager)
+    public void SingleRoll()
     {
         isRolling = true;
-        StartCoroutine(RollTheDice(diceManager));
+        StartCoroutine(SingleRollTheDice());
     }
 
-    // Coroutine that rolls the dice
-    private IEnumerator RollTheDice(DiceManager diceManager)
+
+    // If you left click over the dice then RollTheDice coroutine is started
+    public void MultiRollCall(DiceManager diceManager)
     {
-        // Loop to switch dice sides ramdomly
-        // before final side appears. 20 itterations here.
+        isRolling = true;
+        StartCoroutine(MultiRollTheDice(diceManager));
+    }
+
+
+    public IEnumerator RollTheDice()
+    {
         for (int i = 0; i <= 14; i++)
         {
             // Pick up random value from 0 to 5 (All inclusive)
@@ -51,12 +66,30 @@ public class Dice : MonoBehaviour
             // Pause before next itteration
             yield return new WaitForSeconds(0.1f);
         }
+    }
 
-        // Assigning final side so you can use this value later in your game
-        // for player movement for example
+    public void ClearListeners()
+    {
+        OnDoneRoll = null;
+    }
+
+
+    private IEnumerator SingleRollTheDice()
+    {
+        yield return RollTheDice();
+        _rend.sprite = _diceSides[_result].sprite;
+        OnDoneRoll?.Invoke(this, new RollEventArgs(_result + 1));
+    }
+
+    // Coroutine that rolls the dice
+    private IEnumerator MultiRollTheDice(DiceManager diceManager)
+    {
+        yield return RollTheDice();
+        
         _rend.sprite = _diceSides[_result].sprite;
 
         yield return new WaitForSeconds(1f);
+        isRolling = false;
         diceManager.CallRollDicesListeners(new DiceManager.DiceArgs(_result+1, this));
     }
 

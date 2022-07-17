@@ -68,7 +68,7 @@ public class DiceManager : MonoBehaviour
         };
 
         foreach (var dice in dices){
-            dice.Roll(this);
+            dice.MultiRollCall(this);
         }
     }
 

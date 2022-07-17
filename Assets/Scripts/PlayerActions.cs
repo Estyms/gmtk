@@ -13,7 +13,8 @@ public class PlayerActions : MonoBehaviour
     {
         Rolling,
         AttackReroll,
-        Attack
+        Attack,
+        Waiting
     }
 
     private void Awake()
@@ -45,68 +46,45 @@ public class PlayerActions : MonoBehaviour
                     {
                         // Attack
                         case NextAction.Attack:
+                            attackTarget = hit.collider.GetComponent<Unit>();
+                            if (!attackTarget) break;
+
                             actionDice = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
                             value = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number).Value;
                             attackTarget = hit.transform.GetComponent<Unit>();
-                            switch (actionDice.Key.DiceSides[actionDice.Value - 1].target)
-                            {
-                                case Target.Enemies:
-                                    if (attackTarget?.GetTeam() == 2)
-                                    {
-                                        _gameState.AllyAttack(attackTarget, _diceValues);
-                                        _nextAction = NextAction.Rolling;
-                                    }
-
-                                    break;
-
-                                default:
-                                    actionDice.Key.DiceSides[actionDice.Value].Action(
-                                        _gameState.SelectedUnit,
-                                        _gameState.SelectedUnit,
-                                        value,
-                                        _gameState);
-                                    _nextAction = NextAction.Rolling;
-                                    break;
-                            }
-
-
+                            _gameState.AllyAttack(attackTarget, _diceValues);
+                            _nextAction = NextAction.Rolling;
                             break;
 
                         // Attack or Re-roll one
                         case NextAction.AttackReroll:
 
                             var diceTarget = hit.transform.GetComponent<Dice>();
-                            if (diceTarget?.DiceType != null)
+                            if (diceTarget && !diceTarget.isRolling)
                             {
-                                var dice = hit.transform.GetComponent<Dice>();
-                                Debug.Log("Reroll " + dice.DiceType);
-                                _nextAction = NextAction.Attack;
+                                Debug.Log(diceTarget.name);
+                                _nextAction = NextAction.Waiting;
+                                diceTarget.OnDoneRoll += (_, args) =>
+                                {
+                                    var kv = _diceValues.First(kvp => kvp.Key.DiceType == diceTarget.DiceType);
+                                    _diceValues.Remove(diceTarget);
+                                    _diceValues.Add(diceTarget, args.Value);
+                                    _nextAction = NextAction.Attack;
+                                    diceTarget.ClearListeners();
+                                };
+                                diceTarget.SingleRoll();
+                                break;
                             }
 
                             // Attack
                             attackTarget = hit.transform.GetComponent<Unit>();
-                            actionDice = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
-                            value = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number).Value;
-                            Debug.Log(actionDice.Key.DiceSides[actionDice.Value - 1]);
-                            switch (actionDice.Key.DiceSides[actionDice.Value - 1].target)
+                            if (attackTarget)
                             {
-                                case Target.Enemies:
-                                    if (attackTarget?.GetTeam() == 2)
-                                    {
-                                        _gameState.AllyAttack(attackTarget, _diceValues);
-                                        _nextAction = NextAction.Rolling;
-                                    }
-
-                                    break;
-
-                                default:
-                                    actionDice.Key.DiceSides[actionDice.Value - 1].Action(
-                                        _gameState.SelectedUnit,
-                                        _gameState.SelectedUnit,
-                                        value,
-                                        _gameState);
-                                    _nextAction = NextAction.Rolling;
-                                    break;
+                                actionDice = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
+                                value = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number).Value;
+                                Debug.Log(actionDice.Key.DiceSides[actionDice.Value - 1]);
+                                _gameState.AllyAttack(attackTarget, _diceValues);
+                                _nextAction = NextAction.Rolling;
                             }
 
                             break;
@@ -115,11 +93,12 @@ public class PlayerActions : MonoBehaviour
                         // Rolling
                         case NextAction.Rolling:
                             var rollingDiceTarget = hit.transform.GetComponent<Dice>();
-                            if (rollingDiceTarget?.DiceType != null)
+                            if (rollingDiceTarget)
                             {
-                                _diceManager.ClearListeners();
+                                _nextAction = NextAction.Waiting;
                                 _diceManager.OnDoneRollDices += (_, args) =>
                                 {
+                                    Debug.Log("Done Rolling");
                                     _diceManager.ClearListeners();
                                     _diceValues = args.Values;
                                     _nextAction = NextAction.AttackReroll;

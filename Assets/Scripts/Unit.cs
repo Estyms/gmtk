@@ -122,6 +122,13 @@ public class Unit : MonoBehaviour
         _healthText.text = _currentHealth.ToString();
         if (_currentHealth <= 0) Die();
     }
+    
+    public virtual void Heal(int health)
+    {
+        _currentHealth = Math.Min(health + _currentHealth, unitSo.health);
+        Debug.Log("Got Healed " + health  + " HP");
+        _healthText.text = _currentHealth.ToString();
+    }
 
     // function Die that prints message "Unit died" and destroys game object
     private void Die()
@@ -138,15 +145,7 @@ public class Unit : MonoBehaviour
         OnDie = null;
     }
 
-    public virtual void Heal(GameState gameState, int health)
-    {
-        CanAttack = false;
-        _currentHealth = Math.Min(health + _currentHealth, unitSo.health);
-        Debug.Log("Got Healed " + health  + " HP");
-        _healthText.text = _currentHealth.ToString();
-        OnAttack?.Invoke(this, EventArgs.Empty);
-        gameState.EndTurn();
-    }
+
 
     public int GetTeam()
     {
