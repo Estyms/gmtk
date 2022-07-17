@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -40,11 +41,11 @@ public class Unit : MonoBehaviour
 
     public event EventHandler OnAttackDone;
 
-    private void HideFight(Unit target)
+    public void HideFight(Unit target)
     {
         int unitPos = GetTeam() - 1;
         int targetPos = target.GetTeam() - 1;
-        
+
         _spriteRenderer.sprite = unitSo.sprite;
         _backGround.sortingOrder = -1;
         _spriteRenderer.sortingOrder = 0;
@@ -53,7 +54,8 @@ public class Unit : MonoBehaviour
         transform.position = _oldFightPositions[unitPos];
         target.transform.position = _oldFightPositions[targetPos];
     }
-    private void ShowFight(Unit target)
+
+    public void ShowFight(Unit target)
     {
         _spriteRenderer.sprite = unitSo.attackSprite;
         // set background layer order to 1
@@ -77,62 +79,43 @@ public class Unit : MonoBehaviour
         position1 = _fightPositions[targetPos].position;
         transform2.position = position1;
     }
-    
+
     // function attack(Unit target) that deals damage to target
-    public virtual void Attack(Unit target, GameState gameState)
+    public virtual void Action(Unit target, GameState gameState, Dictionary<Dice, int> diceValues)
     {
         if (!CanAttack) return;
-        
-
         CanAttack = false;
         // Find Dice and call Roll()
-        DiceManager diceManager = GameObject.Find("GameManager").GetComponent<DiceManager>();
-        diceManager.ClearListeners();
-        diceManager.OnDoneRollDices += (_, args) =>
+        var actionDice = diceValues.First(kvp=>kvp.Key.DiceType == DiceSo.DiceType.Action);
+        var numberDice = diceValues.First(kvp=>kvp.Key.DiceType == DiceSo.DiceType.Number);
+        
+        OnAttackDone += (_, _) =>
         {
-            var number = 0;
-            foreach (var (dice,pValue) in args.Values)
-            {
-                if (dice.DiceType == DiceSo.DiceType.Number) number = pValue;
-            }
-            Debug.Log("Rolled a " + number);
-            if (number > 3)
-            {
-                ShowFight(target);
-                target.TakeDamage(unitSo.attack);
-                Debug.Log("Attacked " + target.name);
-            }
-            else
-            {
-                Debug.Log("Attack missed");
-            }
-
-            OnAttackDone += (sender, eventArgs) =>
-            {
-                if (number > 3) HideFight(target);
-
-                // Invoke OnAttack()
-                OnAttack?.Invoke(this, EventArgs.Empty);
-                gameState.EndTurn();
-            };
-
-            StartCoroutine(AttackDone(number > 3));
-
+            // Invoke OnAttack()
+            OnAttack?.Invoke(this, EventArgs.Empty);
+            gameState.EndTurn();
         };
         
-        diceManager.RollDices();
-        Debug.Log("DONE");
+        actionDice.Key.DiceSides[actionDice.Value-1].Action(this, target, numberDice.Value, gameState);
     }
 
-    public IEnumerator AttackDone(bool attacked)
+    public void InvokeAttackDone(bool x)
     {
-        if (attacked) yield return new WaitForSeconds(1f);
+        StartCoroutine(AttackDone(x));
+    }
+    
+    private IEnumerator AttackDone(bool attacked)
+    {
+        if (attacked)
+        {
+            yield return new WaitForSeconds(1f);
+        }
         OnAttackDone?.Invoke(this, EventArgs.Empty);
         OnAttackDone = null;
     }
 
     // function takeDamage(int damage) that reduces current health by damage minus armor and calls Die if health is 0 or less
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         _currentHealth -= damage - unitSo.defense;
         Debug.Log("Took " + (damage - unitSo.defense) + " damage");
@@ -143,12 +126,6 @@ public class Unit : MonoBehaviour
     // function Die that prints message "Unit died" and destroys game object
     private void Die()
     {
-        if (GetType() == typeof(Ally))
-        {
-            Ally ally = (Ally)this;
-            // ally.Effect.enabled = false;
-        }
-
         _isDead = true;
         Debug.Log("Unit died");
         OnDie?.Invoke(this, new OnDieArgs(this));
@@ -159,6 +136,16 @@ public class Unit : MonoBehaviour
     {
         OnAttack = null;
         OnDie = null;
+    }
+
+    public virtual void Heal(GameState gameState, int health)
+    {
+        CanAttack = false;
+        _currentHealth = Math.Min(health + _currentHealth, unitSo.health);
+        Debug.Log("Got Healed " + health  + " HP");
+        _healthText.text = _currentHealth.ToString();
+        OnAttack?.Invoke(this, EventArgs.Empty);
+        gameState.EndTurn();
     }
 
     public int GetTeam()
@@ -190,11 +177,17 @@ public class Unit : MonoBehaviour
     {
         return unitSo.nameString;
     }
+    
+    public int GetAttack()
+    {
+        return unitSo.attack;
+    }
 
     public void SetCanAttack(bool canAttack)
     {
         CanAttack = canAttack;
     }
+    
 
     public class OnDieArgs : EventArgs
     {

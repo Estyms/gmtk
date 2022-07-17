@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Ally : Unit
 {
@@ -18,10 +19,16 @@ public class Ally : Unit
     }
     
     // override Attack()
-    public override void Attack(Unit target, GameState gameState)
+    public override void Action(Unit target, GameState gameState, Dictionary<Dice, int> diceValues)
     {
         // call base Attack()
-        base.Attack(target, gameState);
+        base.Action(target, gameState, diceValues);
+        SetSelected(false);
+    }
+
+    public override void Heal(GameState gameState, int value)
+    {
+        base.Heal(gameState, value);
         SetSelected(false);
     }
 }

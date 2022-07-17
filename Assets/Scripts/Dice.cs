@@ -11,7 +11,7 @@ public class Dice : MonoBehaviour
     public bool isRolling;
 
     // Array of dice sides sprites to load from Resources folder
-    private Sprite[] _diceSides;
+    private DiceFace[] _diceSides;
 
     // Reference to sprite renderer to change sprites
     private SpriteRenderer _rend;
@@ -26,7 +26,8 @@ public class Dice : MonoBehaviour
         // Load dice sides sprites to array from DiceSides subfolder of Resources folder
         _diceSides = die.diceFaces;
     }
-    
+
+
     // If you left click over the dice then RollTheDice coroutine is started
     public void Roll(DiceManager diceManager)
     {
@@ -45,7 +46,7 @@ public class Dice : MonoBehaviour
             _result = Random.Range(0, _diceSides.Length);
 
             // Set sprite to upper face of dice from array according to random value
-            _rend.sprite = _diceSides[_result];
+            _rend.sprite = _diceSides[_result].sprite;
 
             // Pause before next itteration
             yield return new WaitForSeconds(0.1f);
@@ -53,7 +54,7 @@ public class Dice : MonoBehaviour
 
         // Assigning final side so you can use this value later in your game
         // for player movement for example
-        _rend.sprite = _diceSides[_result];
+        _rend.sprite = _diceSides[_result].sprite;
 
         yield return new WaitForSeconds(1f);
         diceManager.CallRollDicesListeners(new DiceManager.DiceArgs(_result+1, this));
@@ -70,4 +71,6 @@ public class Dice : MonoBehaviour
     }
 
     public DiceSo.DiceType DiceType => die.diceType;
+
+    public DiceFace[] DiceSides => _diceSides;
 }

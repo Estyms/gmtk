@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -95,7 +96,7 @@ public class GameState : MonoBehaviour
     }
 
 
-    public void AllyAttack(Unit enemy)
+    public void AllyAttack(Unit enemy, Dictionary<Dice, int> diceValues)
     {
         // Setup event
         onEndTurn = null;
@@ -107,7 +108,7 @@ public class GameState : MonoBehaviour
         };
 
         // Attack the clicked enemy
-        SelectedUnit.Attack(enemy, this);
+        SelectedUnit.Action(enemy, this, diceValues);
     }
 
     public void EnemyAttack(Unit enemy)
@@ -123,16 +124,25 @@ public class GameState : MonoBehaviour
             if (!unitsAlly[random].IsDead()) target = unitsAlly[random];
         }
 
-
+        DiceManager diceManager = GameObject.Find("GameManager").GetComponent<DiceManager>();
+        
         // Setup Event
         onEndTurn = null;
         onEndTurn += (sender, args) =>
         {
             NextState();
+            // Give back the hand to the player
+            // SetTurn(true);
+            diceManager.ClearListeners();
             Debug.Log("ENEMY END TURN " + State);
         };
+        
+        
+        diceManager.ClearListeners();
+        diceManager.OnDoneRollDices += (_, args) => enemy.Action(target, this, args.Values);
+
         // Attack the target
-        enemy.Attack(target, this);
+        diceManager.RollDices();
     }
 
     public void EndTurn()

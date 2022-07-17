@@ -10,5 +10,5 @@ public class DiceSo : ScriptableObject
     }
 
     public DiceType diceType;
-    public Sprite[] diceFaces;
+    public DiceFace[] diceFaces;
 }

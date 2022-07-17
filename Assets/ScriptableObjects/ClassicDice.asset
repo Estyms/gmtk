@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c887d2f879264d159231eab292c54793, type: 3}
   m_Name: ClassicDice
   m_EditorClassIdentifier: 
+  diceType: 0
   diceFaces:
-  - {fileID: 21300000, guid: 95fa8500f67d87c4fbcf5e4c9be8ba16, type: 3}
-  - {fileID: 21300000, guid: 52585b3fcb4936e4b88d0c1cc01de4d1, type: 3}
-  - {fileID: 21300000, guid: 30ef57f44201bc941a8fab54700617f5, type: 3}
-  - {fileID: 21300000, guid: b0f65397803a93c419c2bb98c80b5ed1, type: 3}
-  - {fileID: 21300000, guid: 898481a2c305137419d2fe5eac3bbe2a, type: 3}
-  - {fileID: 21300000, guid: dca9de6da41c3934187ccdce78b9c006, type: 3}
+  - {fileID: 5410469188699123223, guid: 0105ec2d32e91b5499a210d2b7d76f69, type: 3}
+  - {fileID: 5410469188699123223, guid: 99573048825633643a4f89d9c9358673, type: 3}
+  - {fileID: 5410469188699123223, guid: ecd8ab880941e5a4480c12817a91084b, type: 3}
+  - {fileID: 5410469188699123223, guid: 1c63961f19346534dad3c279171b5587, type: 3}
+  - {fileID: 5410469188699123223, guid: 36c49e58af20e724f953818ef6f57935, type: 3}
+  - {fileID: 5410469188699123223, guid: 106e8cb5ae4623547b365c022191072b, type: 3}
