@@ -15,10 +15,11 @@ MonoBehaviour:
   attack: 6
   defense: 3
   description: 
-  sprite: {fileID: -361004691, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
-  attackSprite: {fileID: -1573861654, guid: a084089d428d3a941b7760480041742b, type: 3}
-  icon: {fileID: -1147291549, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
+  sprite: {fileID: -556356116, guid: dec53e7414c55ed4780ee10276553400, type: 3}
+  attackSprite: {fileID: -597838935, guid: dec53e7414c55ed4780ee10276553400, type: 3}
+  icon: {fileID: 62356894, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
   health: 30
   nameString: Warrior Ham
   speed: 10
   team: 1
+  canAttack: 0

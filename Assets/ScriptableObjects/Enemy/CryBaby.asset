@@ -15,10 +15,11 @@ MonoBehaviour:
   attack: 10
   defense: 2
   description: 
-  sprite: {fileID: 53114532, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
-  attackSprite: {fileID: -699289986, guid: a084089d428d3a941b7760480041742b, type: 3}
-  icon: {fileID: 359804788, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
+  sprite: {fileID: -336939127, guid: dec53e7414c55ed4780ee10276553400, type: 3}
+  attackSprite: {fileID: -440149781, guid: dec53e7414c55ed4780ee10276553400, type: 3}
+  icon: {fileID: 993393915, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
   health: 20
   nameString: Enemy name string
   speed: 0
   team: 2
+  canAttack: 0

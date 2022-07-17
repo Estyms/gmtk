@@ -15,10 +15,11 @@ MonoBehaviour:
   attack: 10
   defense: 2
   description: 
-  sprite: {fileID: 1986660688, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
-  attackSprite: {fileID: -1264066378, guid: a084089d428d3a941b7760480041742b, type: 3}
-  icon: {fileID: -1610461731, guid: 51cb69ae6b9abbe4bb228b427d3d8f9d, type: 3}
+  sprite: {fileID: -668441045, guid: dec53e7414c55ed4780ee10276553400, type: 3}
+  attackSprite: {fileID: 706531302, guid: dec53e7414c55ed4780ee10276553400, type: 3}
+  icon: {fileID: 1084800136, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
   health: 20
   nameString: King Croc
   speed: 15
   team: 2
+  canAttack: 0
