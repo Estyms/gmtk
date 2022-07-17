@@ -7,9 +7,17 @@ public enum Target
     None
 }
 
+public enum Rarity
+{
+    None,
+    Critical,
+    Baaaad
+}
+
 public abstract class DiceFace : MonoBehaviour
 {
     public Sprite sprite;
     public Target target;
+    public Rarity rarity;
     public abstract void Action(Unit caster, Unit target, int value, GameState gameState);
 }
