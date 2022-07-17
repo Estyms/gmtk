@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
     [SerializeField] private UnitSo unitSo;
     private SpriteRenderer _backGround;
+    private SpriteRenderer _spriteRenderer;
     private int _currentHealth;
     private Transform[] _fightPositions;
     private TextMeshProUGUI _healthText;
     private bool _isDead;
     private Vector3[] _oldFightPositions;
-    private Sprite _sprite;
     protected bool CanAttack;
 
     private void Awake()
@@ -19,7 +21,8 @@ public class Unit : MonoBehaviour
         _currentHealth = unitSo.health;
         _isDead = false;
         _healthText = GetComponentInChildren<TextMeshProUGUI>();
-        GetComponentInChildren<SpriteRenderer>().sprite = unitSo.sprite;
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _spriteRenderer.sprite = unitSo.sprite;
         _healthText.text = _currentHealth.ToString();
     }
 
@@ -35,25 +38,51 @@ public class Unit : MonoBehaviour
     public event EventHandler OnAttack;
     public event EventHandler<OnDieArgs> OnDie;
 
-    // function attack(Unit target) that deals damage to target
-    public virtual void Attack(Unit target, GameState gameState)
+    public event EventHandler OnAttackDone;
+
+    private void HideFight(Unit target)
     {
-        if (!CanAttack) return;
-        GetComponentInChildren<SpriteRenderer>().sprite = unitSo.attackSprite;
+        int unitPos = GetTeam() - 1;
+        int targetPos = target.GetTeam() - 1;
+        
+        _spriteRenderer.sprite = unitSo.sprite;
+        _backGround.sortingOrder = -1;
+        _spriteRenderer.sortingOrder = 0;
+        target._spriteRenderer.sortingOrder = 0;
+
+        transform.position = _oldFightPositions[unitPos];
+        target.transform.position = _oldFightPositions[targetPos];
+    }
+    private void ShowFight(Unit target)
+    {
+        _spriteRenderer.sprite = unitSo.attackSprite;
         // set background layer order to 1
         _backGround.sortingOrder = 1;
-        GetComponentInChildren<SpriteRenderer>().sortingOrder = 3;
-        target.GetComponentInChildren<SpriteRenderer>().sortingOrder = 2;
+        _spriteRenderer.sortingOrder = 3;
+        target._spriteRenderer.sortingOrder = 2;
 
         int unitPos = GetTeam() - 1;
         int targetPos = target.GetTeam() - 1;
 
-        _oldFightPositions[unitPos] = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        _oldFightPositions[targetPos] = new Vector3(target.transform.position.x, target.transform.position.y,
-            target.transform.position.z);
+        var transform1 = transform;
+        var position = transform1.position;
+        _oldFightPositions[unitPos] = new Vector3(position.x, position.y, position.z);
+        var transform2 = target.transform;
+        var position1 = transform2.position;
+        _oldFightPositions[targetPos] = new Vector3(position1.x, position1.y,
+            position1.z);
 
-        transform.position = _fightPositions[unitPos].position;
-        target.transform.position = _fightPositions[targetPos].position;
+        position = _fightPositions[unitPos].position;
+        transform1.position = position;
+        position1 = _fightPositions[targetPos].position;
+        transform2.position = position1;
+    }
+    
+    // function attack(Unit target) that deals damage to target
+    public virtual void Attack(Unit target, GameState gameState)
+    {
+        if (!CanAttack) return;
+        
 
         CanAttack = false;
         // Find Dice and call Roll()
@@ -66,9 +95,10 @@ public class Unit : MonoBehaviour
             {
                 if (dice.DiceType == DiceSo.DiceType.Number) number = pValue;
             }
-            Debug.Log(number);
+            Debug.Log("Rolled a " + number);
             if (number > 3)
             {
+                ShowFight(target);
                 target.TakeDamage(unitSo.attack);
                 Debug.Log("Attacked " + target.name);
             }
@@ -77,23 +107,28 @@ public class Unit : MonoBehaviour
                 Debug.Log("Attack missed");
             }
 
-            GetComponentInChildren<SpriteRenderer>().sprite = unitSo.sprite;
-            _backGround.sortingOrder = -1;
-            GetComponentInChildren<SpriteRenderer>().sortingOrder = 0;
-            target.GetComponentInChildren<SpriteRenderer>().sortingOrder = 0;
+            OnAttackDone += (sender, eventArgs) =>
+            {
+                if (number > 3) HideFight(target);
 
+                // Invoke OnAttack()
+                OnAttack?.Invoke(this, EventArgs.Empty);
+                gameState.EndTurn();
+            };
 
-            transform.position = _oldFightPositions[unitPos];
-            target.transform.position = _oldFightPositions[targetPos];
+            StartCoroutine(AttackDone(number > 3));
 
-            // Invoke OnAttack()
-            OnAttack?.Invoke(this, EventArgs.Empty);
-            gameState.EndTurn();
         };
-
-        // dice.Roll();
+        
         diceManager.RollDices();
         Debug.Log("DONE");
+    }
+
+    public IEnumerator AttackDone(bool attacked)
+    {
+        if (attacked) yield return new WaitForSeconds(1f);
+        OnAttackDone?.Invoke(this, EventArgs.Empty);
+        OnAttackDone = null;
     }
 
     // function takeDamage(int damage) that reduces current health by damage minus armor and calls Die if health is 0 or less

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c887d2f879264d159231eab292c54793, type: 3}
   m_Name: ActionDice
   m_EditorClassIdentifier: 
+  diceType: 1
   diceFaces:
   - {fileID: 21300000, guid: 02f3454e474a7794083247612e6fcce2, type: 3}
   - {fileID: 21300000, guid: aa6b90d6a962a3244ad8d65aee7f80d9, type: 3}
