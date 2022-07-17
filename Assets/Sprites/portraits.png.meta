@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,15 +123,15 @@ TextureImporter:
         y: 1891.5
         width: 623.5
         height: 630.5
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9665eb39c0b7ccb4f9b6d26ccc143708
-      internalID: 62356894
+      spriteID: c091637aeec6cdf498b25bea03f8a3a1
+      internalID: 661296343
       vertices: []
       indices: 
       edges: []
@@ -144,15 +144,15 @@ TextureImporter:
         y: 1891.5
         width: 623.5
         height: 630.5
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95d05be857986354db27fec85f6d93b9
-      internalID: 378293212
+      spriteID: 57ac435102f1e744fa6a847a26c39bd8
+      internalID: -39687960
       vertices: []
       indices: 
       edges: []
@@ -165,15 +165,15 @@ TextureImporter:
         y: 1891.5
         width: 623.5
         height: 630.5
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5aa754ff073b97c4f8dcf02f080d4ed0
-      internalID: 2086902442
+      spriteID: 62b8650671273d14eb3c2d371973e916
+      internalID: -1651474994
       vertices: []
       indices: 
       edges: []
@@ -186,15 +186,15 @@ TextureImporter:
         y: 1891.5
         width: 623.5
         height: 630.5
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51cd63498f4b68249a997c6c7bb7bfaa
-      internalID: 993393915
+      spriteID: d1e306e3e08abda41a040cecaaad0642
+      internalID: 1021615624
       vertices: []
       indices: 
       edges: []
@@ -203,19 +203,19 @@ TextureImporter:
       name: portraits_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1261.5
-        width: 623.5
-        height: 630.5
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 2
+        y: 1262
+        width: 607
+        height: 630
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e9a5b12c452f10c4d914fef2344230b3
-      internalID: 1084800136
+      spriteID: 3bc29e2c7c55b364c9f346f0d02ae8fa
+      internalID: 1355234833
       vertices: []
       indices: 
       edges: []
@@ -224,19 +224,19 @@ TextureImporter:
       name: portraits_5
       rect:
         serializedVersion: 2
-        x: 623
-        y: 1261.5
-        width: 623.5
-        height: 630.5
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 609
+        y: 1262
+        width: 638
+        height: 630
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 555cc5733dfb5b94992b42bf221fec4f
-      internalID: 9193989
+      spriteID: 0fef10f0ae7c19d45bcf81ab36d4cf39
+      internalID: -428932968
       vertices: []
       indices: 
       edges: []
@@ -252,12 +252,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      portraits_1: 378293212
-      portraits_0: 62356894
-      portraits_3: 993393915
-      portraits_4: 1084800136
-      portraits_5: 9193989
-      portraits_2: 2086902442
+      portraits_1: -39687960
+      portraits_0: 661296343
+      portraits_3: 1021615624
+      portraits_4: 1355234833
+      portraits_5: -428932968
+      portraits_2: -1651474994
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

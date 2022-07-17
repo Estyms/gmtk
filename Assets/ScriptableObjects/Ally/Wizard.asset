@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   sprite: {fileID: 453056495, guid: dec53e7414c55ed4780ee10276553400, type: 3}
   attackSprite: {fileID: -911718248, guid: dec53e7414c55ed4780ee10276553400, type: 3}
-  icon: {fileID: 2086902442, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
+  icon: {fileID: -1651474994, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
   health: 20
   nameString: Wizard
   speed: 6

@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   sprite: {fileID: -563859520, guid: dec53e7414c55ed4780ee10276553400, type: 3}
   attackSprite: {fileID: 87486801, guid: dec53e7414c55ed4780ee10276553400, type: 3}
-  icon: {fileID: 9193989, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
+  icon: {fileID: -428932968, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
   health: 20
   nameString: Enemy name string
   speed: 0

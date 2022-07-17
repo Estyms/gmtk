@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   sprite: {fileID: -668441045, guid: dec53e7414c55ed4780ee10276553400, type: 3}
   attackSprite: {fileID: 706531302, guid: dec53e7414c55ed4780ee10276553400, type: 3}
-  icon: {fileID: 1084800136, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
+  icon: {fileID: 1355234833, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
   health: 20
   nameString: King Croc
   speed: 15
