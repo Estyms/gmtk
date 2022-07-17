@@ -17,16 +17,13 @@ public class GameState : MonoBehaviour
     // Properties
     [SerializeField] private Unit[] unitsAlly;
     [SerializeField] private SpeedManager speedManager;
-    [SerializeField] private TextMeshProUGUI _turnText;
+    [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private FightLoader fightLoader;
+    [SerializeField] private GameObject nextStagePanel;
+    [SerializeField] private GameObject backStagePanel;
 
     // Setters
-    public Ally SelectedUnit
-    {
-        get;
-        set;
-        // _selectedUnit.Effect.enabled = true;
-    }
+    public Ally SelectedUnit { get; set; }
 
     // Getters
     public Unit[] UnitsAlly => unitsAlly;
@@ -47,7 +44,6 @@ public class GameState : MonoBehaviour
             State = StateEnum.Fight;
             SetTurn(true);
             speedManager.InitFight(this);
-            
         };
         fightLoader.NextFight(this);
     }
@@ -56,35 +52,10 @@ public class GameState : MonoBehaviour
     public event EventHandler onEndTurn;
     public event EventHandler<EnemiesGeneratedArgs> onEnemiesGenerated;
 
-
-    //Setters
-    // public Ally SelectedUnit
-    // {
-    //     get => _selectedUnit;
-    //     set
-    //     {
-    //         if (_selectedUnit) _selectedUnit.Effect.enabled = false;
-    //         _selectedUnit = value;
-    //         _selectedUnit.Effect.enabled = true;
-    //     }
-    // }
-
-    // Getters
-    // public Unit[] UnitsAlly => unitsAlly;
-    //
-    // public Unit[] UnitsEnemy => unitsEnemy;
-    // public bool IsMyTurn { get; private set; } = true;
-    //
-    // public StateEnum State { get; private set; } = StateEnum.Fight;
-    //
-    // public Ally SelectedUnit { get; set; }
-
-    // public event EventHandler onEndTurn;
-
     public void SetTurn(bool isMyTurn)
     {
         IsMyTurn = isMyTurn;
-        _turnText.text = isMyTurn ? "Your turn" : "Enemy turn";
+        turnText.text = isMyTurn ? "Your turn" : "Enemy turn";
     }
 
     public void EndFight()
@@ -93,18 +64,26 @@ public class GameState : MonoBehaviour
         switch (State)
         {
             case StateEnum.Win:
-                State = StateEnum.Loading;
-                onEnemiesGenerated = null;
-                onEnemiesGenerated += (_, args) =>
-                {
-                    UnitsEnemy = args.Enemies;
-                    State = StateEnum.Fight;
-                    // SetTurn(true);
-                    speedManager.InitFight(this);
-                };
-                fightLoader.NextFight(this);
+                nextStagePanel.SetActive(true);
+                backStagePanel.SetActive(true);
                 break;
         }
+    }
+
+    public void NextFight()
+    {
+        nextStagePanel.SetActive(false);
+        backStagePanel.SetActive(false);
+
+        State = StateEnum.Loading;
+        onEnemiesGenerated = null;
+        onEnemiesGenerated += (_, args) =>
+        {
+            UnitsEnemy = args.Enemies;
+            State = StateEnum.Fight;
+            speedManager.InitFight(this);
+        };
+        fightLoader.NextFight(this);
     }
 
 
@@ -149,11 +128,7 @@ public class GameState : MonoBehaviour
         onEndTurn = null;
         onEndTurn += (sender, args) =>
         {
-            // if (_selectedUnit.IsDead()) _selectedUnit = null;
-            // Compute next state
             NextState();
-            // Give back the hand to the player
-            // SetTurn(true);
             Debug.Log("ENEMY END TURN " + State);
         };
         // Attack the target

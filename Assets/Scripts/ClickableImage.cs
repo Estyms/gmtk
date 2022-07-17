@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class ClickableImage : MonoBehaviour
 {
-    [SerializeField] private ScenesManager scenesManager;
     [SerializeField] private string sceneName;
-    private Image _image;
+    private ScenesManager _scenesManager;
 
-    private void Awake()
+    private void Start()
     {
-        _image = GetComponent<Image>();
+        _scenesManager = FindObjectOfType<ScenesManager>();
     }
 
     // OnMouseOver
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0)) scenesManager.LoadScene(sceneName);
+        if (Input.GetMouseButtonDown(0)) _scenesManager.LoadScene(sceneName);
     }
 }
