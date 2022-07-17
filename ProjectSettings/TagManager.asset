@@ -8,10 +8,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Hover
+  - 
   - Water
   - UI
-  - Die
+  - 
   - 
   - 
   - 
@@ -40,10 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Hover
-    uniqueID: 2064492565
-    locked: 0
-  - name: Die
-    uniqueID: 1553109031
     locked: 0

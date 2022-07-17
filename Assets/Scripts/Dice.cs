@@ -18,11 +18,23 @@ public class Dice : MonoBehaviour
     private SpriteRenderer _rend;
     private int _result;
     private SpriteRenderer _hover;
+    private PlayerActions _pa;
     
     public event EventHandler<RollEventArgs> OnDoneRoll;
 
 
-    private void OnMouseEnter() => _hover.enabled = true;
+    private void OnMouseEnter()
+    {
+        if (_pa.NextActionGet == PlayerActions.NextAction.Rolling || 
+            _pa.NextActionGet == PlayerActions.NextAction.AttackReroll) 
+            _hover.enabled = true;
+    }
+
+    private void OnMouseDown()
+    {
+        _hover.enabled = false;
+    }
+
 
     private void OnMouseExit() => _hover.enabled = false;
     
@@ -30,6 +42,7 @@ public class Dice : MonoBehaviour
     private void Start()
     {
         // Assign Renderer component
+        _pa = FindObjectOfType<PlayerActions>();
         _rend = GetComponent<SpriteRenderer>();
         _hover = transform.GetChild(0).GetComponent<SpriteRenderer>();
 

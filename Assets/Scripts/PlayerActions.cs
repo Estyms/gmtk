@@ -95,15 +95,7 @@ public class PlayerActions : MonoBehaviour
                             var rollingDiceTarget = hit.transform.GetComponent<Dice>();
                             if (rollingDiceTarget)
                             {
-                                _nextAction = NextAction.Waiting;
-                                _diceManager.OnDoneRollDices += (_, args) =>
-                                {
-                                    Debug.Log("Done Rolling");
-                                    _diceManager.ClearListeners();
-                                    _diceValues = args.Values;
-                                    _nextAction = NextAction.AttackReroll;
-                                };
-                                _diceManager.RollDices();
+                                rollDices();
                             }
 
                             break;
@@ -120,4 +112,19 @@ public class PlayerActions : MonoBehaviour
                 break;
         }
     }
+
+    public void rollDices()
+    {
+        _nextAction = NextAction.Waiting;
+        _diceManager.OnDoneRollDices += (_, args) =>
+        {
+            Debug.Log("Done Rolling");
+            _diceManager.ClearListeners();
+            _diceValues = args.Values;
+            _nextAction = NextAction.AttackReroll;
+        };
+        _diceManager.RollDices();
+    }
+
+    public NextAction NextActionGet => _nextAction;
 }
