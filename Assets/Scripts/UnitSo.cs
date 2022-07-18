@@ -9,6 +9,7 @@ public class UnitSo : ScriptableObject
     public Sprite sprite;
     public Sprite attackSprite;
     public Sprite icon;
+    public AudioClip attackSound;
 
     // variables for the unit life, attack, defense, speed, range, and cost
     public int health;
@@ -17,5 +18,5 @@ public class UnitSo : ScriptableObject
     public string nameString;
     public int speed;
     public int team;
-    public bool canAttack = false;
+    public bool canAttack;
 }

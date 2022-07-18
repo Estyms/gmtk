@@ -7,6 +7,7 @@ using UnityEngine.Video;
 
 public class DiceManager : MonoBehaviour
 {
+    [SerializeField] AudioSource audioSource;
     [SerializeField] private Dice[] dices;
     private bool _rolling;
 
@@ -54,6 +55,7 @@ public class DiceManager : MonoBehaviour
     
     public void RollDices()
     {
+        audioSource.Play();
         _rolling = true;
         ConcurrentDictionary<Dice, int> dict = new ConcurrentDictionary<Dice, int>();
 

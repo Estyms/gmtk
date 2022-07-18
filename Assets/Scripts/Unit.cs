@@ -8,13 +8,15 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     [SerializeField] private UnitSo unitSo;
+    private AudioSource _audioSource;
     private SpriteRenderer _backGround;
-    private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _criticalHitEffect;
     private int _currentHealth;
     private Transform[] _fightPositions;
     private TextMeshProUGUI _healthText;
     private bool _isDead;
     private Vector3[] _oldFightPositions;
+    private SpriteRenderer _spriteRenderer;
     protected bool CanAttack;
 
     private void Awake()
@@ -29,6 +31,8 @@ public class Unit : MonoBehaviour
 
     protected virtual void Start()
     {
+        _criticalHitEffect = GameObject.Find("Critical").GetComponent<SpriteRenderer>();
+        _audioSource = GameObject.Find("Audio Source Attack").GetComponent<AudioSource>();
         _backGround = GameObject.Find("backGround").GetComponent<SpriteRenderer>();
         _fightPositions = new Transform[2];
         _oldFightPositions = new Vector3[2];
@@ -57,6 +61,8 @@ public class Unit : MonoBehaviour
 
     public void ShowFight(Unit target)
     {
+        _audioSource.clip = unitSo.attackSound;
+        _audioSource.Play();
         _spriteRenderer.sprite = unitSo.attackSprite;
         // set background layer order to 1
         _backGround.sortingOrder = 1;
@@ -66,11 +72,11 @@ public class Unit : MonoBehaviour
         int unitPos = GetTeam() - 1;
         int targetPos = target.GetTeam() - 1;
 
-        var transform1 = transform;
-        var position = transform1.position;
+        Transform transform1 = transform;
+        Vector3 position = transform1.position;
         _oldFightPositions[unitPos] = new Vector3(position.x, position.y, position.z);
-        var transform2 = target.transform;
-        var position1 = transform2.position;
+        Transform transform2 = target.transform;
+        Vector3 position1 = transform2.position;
         _oldFightPositions[targetPos] = new Vector3(position1.x, position1.y,
             position1.z);
 
@@ -86,30 +92,32 @@ public class Unit : MonoBehaviour
         if (!CanAttack) return;
         CanAttack = false;
         // Find Dice and call Roll()
-        var actionDice = diceValues.First(kvp=>kvp.Key.DiceType == DiceSo.DiceType.Action);
-        var numberDice = diceValues.First(kvp=>kvp.Key.DiceType == DiceSo.DiceType.Number);
-        
+        var actionDice = diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
+        var numberDice = diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number);
+
+
+        // if (actionDice.Key.DiceSides[actionDice.Value - 1].rarity == Rarity.Critical)
+        // {
+        //     _criticalHitEffect.enabled = true;
+        // }
         OnAttackDone += (_, _) =>
         {
             // Invoke OnAttack()
             OnAttack?.Invoke(this, EventArgs.Empty);
             gameState.EndTurn();
         };
-        
-        actionDice.Key.DiceSides[actionDice.Value-1].Action(this, target, numberDice.Value, gameState);
+
+        actionDice.Key.DiceSides[actionDice.Value - 1].Action(this, target, numberDice.Value, gameState);
     }
 
     public void InvokeAttackDone(bool x)
     {
         StartCoroutine(AttackDone(x));
     }
-    
+
     private IEnumerator AttackDone(bool attacked)
     {
-        if (attacked)
-        {
-            yield return new WaitForSeconds(1f);
-        }
+        if (attacked) yield return new WaitForSeconds(1f);
         OnAttackDone?.Invoke(this, EventArgs.Empty);
         OnAttackDone = null;
     }
@@ -117,16 +125,16 @@ public class Unit : MonoBehaviour
     // function takeDamage(int damage) that reduces current health by damage minus armor and calls Die if health is 0 or less
     public void TakeDamage(int damage)
     {
-        _currentHealth -= Math.Max(0,damage - unitSo.defense);
+        _currentHealth -= Math.Max(0, damage - unitSo.defense);
         Debug.Log("Took " + (damage - unitSo.defense) + " damage");
         _healthText.text = _currentHealth.ToString();
         if (_currentHealth <= 0) Die();
     }
-    
+
     public virtual void Heal(int health)
     {
         _currentHealth = Math.Min(health + _currentHealth, unitSo.health);
-        Debug.Log("Got Healed " + health  + " HP");
+        Debug.Log("Got Healed " + health + " HP");
         _healthText.text = _currentHealth.ToString();
     }
 
@@ -144,7 +152,6 @@ public class Unit : MonoBehaviour
         OnAttack = null;
         OnDie = null;
     }
-
 
 
     public int GetTeam()
@@ -176,7 +183,7 @@ public class Unit : MonoBehaviour
     {
         return unitSo.nameString;
     }
-    
+
     public int GetAttack()
     {
         return unitSo.attack;
@@ -186,7 +193,7 @@ public class Unit : MonoBehaviour
     {
         CanAttack = canAttack;
     }
-    
+
 
     public class OnDieArgs : EventArgs
     {

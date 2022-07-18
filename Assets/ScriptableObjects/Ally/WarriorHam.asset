@@ -18,6 +18,7 @@ MonoBehaviour:
   sprite: {fileID: -556356116, guid: dec53e7414c55ed4780ee10276553400, type: 3}
   attackSprite: {fileID: -597838935, guid: dec53e7414c55ed4780ee10276553400, type: 3}
   icon: {fileID: 661296343, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
+  attackSound: {fileID: 8300000, guid: 7f7ca0d6ef9654f5e9f366a860b6d1bd, type: 3}
   health: 30
   nameString: Warrior Ham
   speed: 10
