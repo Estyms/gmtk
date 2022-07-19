@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Dice;
 using Manager;
 using ScriptableObjects;
+using TMPro;
 using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
@@ -15,11 +15,14 @@ public class PlayerActions : MonoBehaviour
         Waiting
     }
 
+    [SerializeField] private TextMeshProUGUI rerollAmountText;
     private DiceManager _diceManager;
     private Dictionary<Dice.Dice, int> _diceValues;
     private GameState _gameState;
 
     public NextAction NextActionGet { get; private set; }
+
+    public int RerollAmount { get; set; } = 3;
 
     private void Awake()
     {
@@ -44,27 +47,27 @@ public class PlayerActions : MonoBehaviour
                     KeyValuePair<Dice.Dice, int> actionDice;
                     int value;
                     Unit.Unit attackTarget;
-                    
+
                     switch (NextActionGet)
                     {
                         // Attack
                         case NextAction.Attack:
                             attackTarget = hit.transform.GetComponent<Unit.Unit>();
-                            
+
                             if (!attackTarget) break;
 
                             actionDice = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
                             value = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number).Value;
-                            
+
                             _gameState.AllyAttack(attackTarget, _diceValues);
                             NextActionGet = NextAction.Rolling;
                             break;
-                        
+
                         // Attack or Re-roll one
                         case NextAction.AttackReroll:
 
                             Dice.Dice diceTarget = hit.transform.GetComponent<Dice.Dice>();
-                            if (diceTarget && !diceTarget.isRolling)
+                            if (diceTarget && !diceTarget.isRolling && RerollAmount > 0)
                             {
                                 Debug.Log(diceTarget.name);
                                 NextActionGet = NextAction.Waiting;
@@ -77,6 +80,8 @@ public class PlayerActions : MonoBehaviour
                                     diceTarget.ClearListeners();
                                 };
                                 diceTarget.SingleRoll();
+                                RerollAmount--;
+                                UpdateRerollAmountText();
                                 break;
                             }
 
@@ -92,7 +97,7 @@ public class PlayerActions : MonoBehaviour
                             }
 
                             break;
-                        
+
                         // Rolling
                         case NextAction.Rolling:
                             Dice.Dice rollingDiceTarget = hit.transform.GetComponent<Dice.Dice>();
@@ -124,5 +129,10 @@ public class PlayerActions : MonoBehaviour
             NextActionGet = NextAction.AttackReroll;
         };
         _diceManager.RollDices();
+    }
+
+    public void UpdateRerollAmountText()
+    {
+        rerollAmountText.text = RerollAmount + " Reroll";
     }
 }

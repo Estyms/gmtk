@@ -12,7 +12,6 @@ public class UnitSelector : MonoBehaviour
 
     private int _currentUnitIndex;
 
-    // private bool _isSelectable;
     private PlayerStatsSo _playerStats;
     private SpriteRenderer _spriteRenderer;
     private UnitSo[] _team;
@@ -21,7 +20,6 @@ public class UnitSelector : MonoBehaviour
 
     private void Awake()
     {
-        // _units = new UnitSo[Resources.LoadAll<UnitSo>("Ally").Length];
         _units = Resources.LoadAll<UnitSo>("Ally");
         _teamList = Resources.Load<TeamListSo>("ActualTeam");
         _playerStats = Resources.Load<PlayerStatsSo>("PlayerStats");

@@ -82,6 +82,9 @@ namespace Manager
 
         public void NextFight()
         {
+            GameObject.Find("GameManager").GetComponent<PlayerActions>().RerollAmount++;
+            GameObject.Find("GameManager").GetComponent<PlayerActions>().UpdateRerollAmountText();
+
             nextStagePanel.SetActive(false);
             backStagePanel.SetActive(false);
 
