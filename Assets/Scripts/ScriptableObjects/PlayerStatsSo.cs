@@ -1,4 +1,5 @@
-﻿using Unit;
+﻿using System.Collections.Generic;
+using Unit;
 using UnityEngine;
 
 namespace ScriptableObjects
@@ -7,7 +8,7 @@ namespace ScriptableObjects
     public class PlayerStatsSo : ScriptableObject
     {
         public TeamListSo actualTeam;
-        public UnitSo[] unlockedAllies;
+        public List<UnitSo> unlockedAllies;
         public int gold;
     }
 }
