@@ -13,7 +13,5 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   actualTeam: {fileID: 11400000, guid: aa18b6f5048d1ba40a13c2284c976931, type: 2}
-  unlockedAllies:
-  - {fileID: 11400000, guid: 51696b639e96d024995705c7964aa17f, type: 2}
-  - {fileID: 11400000, guid: f1810ab49f74cef43a335dbfe8067136, type: 2}
-  gold: 50
+  unlockedAllies: []
+  gold: 999999999

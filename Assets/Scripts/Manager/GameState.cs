@@ -18,19 +18,20 @@ namespace Manager
             Loading = 3
         }
 
-        // Properties
-        [SerializeField] private Unit.Unit[] unitsAlly;
+        [SerializeField] private TeamSpawner teamSpawner;
         [SerializeField] private SpeedManager speedManager;
         [SerializeField] private TextMeshProUGUI turnText;
         [SerializeField] private FightLoader fightLoader;
         [SerializeField] private GameObject nextStagePanel;
         [SerializeField] private GameObject backStagePanel;
 
+        // Properties
+
         // Setters
         public Ally SelectedUnit { get; set; }
 
         // Getters
-        public Unit.Unit[] UnitsAlly => unitsAlly;
+        public Unit.Unit[] UnitsAlly { get; private set; }
 
         public Unit.Unit[] UnitsEnemy { get; private set; } = { };
 
@@ -50,6 +51,11 @@ namespace Manager
                 speedManager.InitFight(this);
             };
             fightLoader.NextFight(this);
+        }
+
+        private void Start()
+        {
+            UnitsAlly = teamSpawner.Units;
         }
 
         // get delted by MOI
@@ -93,7 +99,7 @@ namespace Manager
 
         private void NextState()
         {
-            State = unitsAlly.All(ally => ally.IsDead()) ? StateEnum.Lose
+            State = UnitsAlly.All(ally => ally.IsDead()) ? StateEnum.Lose
                 : UnitsEnemy.All(enemy => enemy.IsDead()) ? StateEnum.Win
                 : StateEnum.Fight;
         }
@@ -123,8 +129,8 @@ namespace Manager
             // Search a target
             while (target == null)
             {
-                int random = Random.Range(0, unitsAlly.Length);
-                if (!unitsAlly[random].IsDead()) target = unitsAlly[random];
+                int random = Random.Range(0, UnitsAlly.Length);
+                if (!UnitsAlly[random].IsDead()) target = UnitsAlly[random];
             }
 
             DiceManager diceManager = GameObject.Find("GameManager").GetComponent<DiceManager>();

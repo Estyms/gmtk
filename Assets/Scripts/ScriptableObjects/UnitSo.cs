@@ -21,5 +21,6 @@ namespace ScriptableObjects
         public int speed;
         public int team;
         public int cost;
+        public GameObject prefab;
     }
 }

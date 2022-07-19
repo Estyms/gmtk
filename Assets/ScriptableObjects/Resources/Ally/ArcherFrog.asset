@@ -24,3 +24,4 @@ MonoBehaviour:
   speed: 13
   team: 1
   cost: 50
+  prefab: {fileID: 4370733742904466772, guid: 911ebc18008f49740bbe0a2aa0bb1afe, type: 3}
