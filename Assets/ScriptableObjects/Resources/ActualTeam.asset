@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ActualTeam
   m_EditorClassIdentifier: 
   teamList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: ea07d6945a1372a4c9cda0bd23a6e364, type: 2}
+  - {fileID: 11400000, guid: ea07d6945a1372a4c9cda0bd23a6e364, type: 2}
+  - {fileID: 11400000, guid: ea07d6945a1372a4c9cda0bd23a6e364, type: 2}

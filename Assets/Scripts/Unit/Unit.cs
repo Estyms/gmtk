@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dice;
 using Manager;
+using MoreMountains.Feedbacks;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Unit
     public class Unit : MonoBehaviour
     {
         [SerializeField] private UnitSo unitSo;
+        [SerializeField] private MMF_Player takingDamageFeedback;
         private AudioSource _audioSource;
         private SpriteRenderer _backGround;
         private SpriteRenderer _criticalHitEffect;
@@ -130,6 +132,7 @@ namespace Unit
         // function takeDamage(int damage) that reduces current health by damage minus armor and calls Die if health is 0 or less
         public void TakeDamage(int damage)
         {
+            takingDamageFeedback.PlayFeedbacks();
             _currentHealth -= Math.Max(0, damage - unitSo.defense);
             Debug.Log("Took " + (damage - unitSo.defense) + " damage");
             _healthText.text = _currentHealth.ToString();
