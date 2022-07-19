@@ -1,37 +1,42 @@
-﻿using UnityEngine;
+﻿using Manager;
+using UnityEngine;
 
-public class Enemy : Unit
+namespace Unit
 {
-    [SerializeField] private SpriteRenderer hoverCircle;
-    private GameState _gameState;
-    private Unit _target;
-
-    public SpriteRenderer HoverCircle
+    public class Enemy : Unit
     {
-        get => hoverCircle;
-        set => hoverCircle = value;
-    }
+        [SerializeField] private SpriteRenderer hoverCircle;
+        private GameState _gameState;
+        private Unit _target;
 
-    protected new void Start()
-    {
-        base.Start();
-        // Find Manager and get PlayerActions
-        _gameState = GameObject.Find("GameManager").GetComponent<GameState>();
-        hoverCircle.enabled = false;
-    }
+        public SpriteRenderer HoverCircle
+        {
+            get => hoverCircle;
+            set => hoverCircle = value;
+        }
 
-    private void Update()
-    {
-        if (!_gameState.IsMyTurn && !FindObjectOfType<DiceManager>().Rolling && CanAttack) _gameState.EnemyAttack(this);
-    }
+        protected new void Start()
+        {
+            base.Start();
+            // Find Manager and get PlayerActions
+            _gameState = GameObject.Find("GameManager").GetComponent<GameState>();
+            hoverCircle.enabled = false;
+        }
 
-    public void OnMouseEnter()
-    {
-        hoverCircle.enabled = true;
-    }
+        private void Update()
+        {
+            if (!_gameState.IsMyTurn && !FindObjectOfType<DiceManager>().Rolling && CanAttack)
+                _gameState.EnemyAttack(this);
+        }
 
-    public void OnMouseExit()
-    {
-        hoverCircle.enabled = false;
+        public void OnMouseEnter()
+        {
+            hoverCircle.enabled = true;
+        }
+
+        public void OnMouseExit()
+        {
+            hoverCircle.enabled = false;
+        }
     }
 }

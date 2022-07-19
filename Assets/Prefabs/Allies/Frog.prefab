@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 2641564171181394140}
   - component: {fileID: 4370733742904466777}
   m_Layer: 0
-  m_Name: Ally
+  m_Name: Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea0832d43a54dd58aa8b35001b47958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSo: {fileID: 0}
+  unitSo: {fileID: 11400000, guid: ea07d6945a1372a4c9cda0bd23a6e364, type: 2}
   selectCircle: {fileID: 2713162234937430541}
   hoverCircle: {fileID: 5251826258006518}
 --- !u!61 &4370733742904466777

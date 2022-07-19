@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using Dice;
+using Manager;
+using ScriptableObjects;
 using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
 {
-    private GameState _gameState;
-    private NextAction _nextAction;
-    private DiceManager _diceManager;
-    private Dictionary<Dice, int> _diceValues;
-
     public enum NextAction
     {
         Rolling,
@@ -17,21 +15,25 @@ public class PlayerActions : MonoBehaviour
         Waiting
     }
 
+    private DiceManager _diceManager;
+    private Dictionary<Dice.Dice, int> _diceValues;
+    private GameState _gameState;
+
+    public NextAction NextActionGet { get; private set; }
+
     private void Awake()
     {
         _gameState = GetComponent<GameState>();
         _diceManager = GetComponent<DiceManager>();
-        _nextAction = NextAction.Rolling;
+        NextActionGet = NextAction.Rolling;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         switch (_gameState.State)
         {
             case GameState.StateEnum.Fight:
             {
-                // if click on a unit in ally team then select it
                 if (_gameState.IsMyTurn && Input.GetMouseButtonDown(0))
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -39,37 +41,39 @@ public class PlayerActions : MonoBehaviour
 
                     if (!hit.collider) return;
 
-                    KeyValuePair<Dice, int> actionDice;
+                    KeyValuePair<Dice.Dice, int> actionDice;
                     int value;
-                    Unit attackTarget;
-                    switch (_nextAction)
+                    Unit.Unit attackTarget;
+                    
+                    switch (NextActionGet)
                     {
                         // Attack
                         case NextAction.Attack:
-                            attackTarget = hit.collider.GetComponent<Unit>();
+                            attackTarget = hit.transform.GetComponent<Unit.Unit>();
+                            
                             if (!attackTarget) break;
 
                             actionDice = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
                             value = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number).Value;
-                            attackTarget = hit.transform.GetComponent<Unit>();
+                            
                             _gameState.AllyAttack(attackTarget, _diceValues);
-                            _nextAction = NextAction.Rolling;
+                            NextActionGet = NextAction.Rolling;
                             break;
-
+                        
                         // Attack or Re-roll one
                         case NextAction.AttackReroll:
 
-                            var diceTarget = hit.transform.GetComponent<Dice>();
+                            Dice.Dice diceTarget = hit.transform.GetComponent<Dice.Dice>();
                             if (diceTarget && !diceTarget.isRolling)
                             {
                                 Debug.Log(diceTarget.name);
-                                _nextAction = NextAction.Waiting;
+                                NextActionGet = NextAction.Waiting;
                                 diceTarget.OnDoneRoll += (_, args) =>
                                 {
                                     var kv = _diceValues.First(kvp => kvp.Key.DiceType == diceTarget.DiceType);
                                     _diceValues.Remove(diceTarget);
                                     _diceValues.Add(diceTarget, args.Value);
-                                    _nextAction = NextAction.Attack;
+                                    NextActionGet = NextAction.Attack;
                                     diceTarget.ClearListeners();
                                 };
                                 diceTarget.SingleRoll();
@@ -77,26 +81,22 @@ public class PlayerActions : MonoBehaviour
                             }
 
                             // Attack
-                            attackTarget = hit.transform.GetComponent<Unit>();
+                            attackTarget = hit.transform.GetComponent<Unit.Unit>();
                             if (attackTarget)
                             {
                                 actionDice = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
                                 value = _diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number).Value;
                                 Debug.Log(actionDice.Key.DiceSides[actionDice.Value - 1]);
                                 _gameState.AllyAttack(attackTarget, _diceValues);
-                                _nextAction = NextAction.Rolling;
+                                NextActionGet = NextAction.Rolling;
                             }
 
                             break;
-
-
+                        
                         // Rolling
                         case NextAction.Rolling:
-                            var rollingDiceTarget = hit.transform.GetComponent<Dice>();
-                            if (rollingDiceTarget)
-                            {
-                                rollDices();
-                            }
+                            Dice.Dice rollingDiceTarget = hit.transform.GetComponent<Dice.Dice>();
+                            if (rollingDiceTarget) rollDices();
 
                             break;
                     }
@@ -115,16 +115,14 @@ public class PlayerActions : MonoBehaviour
 
     public void rollDices()
     {
-        _nextAction = NextAction.Waiting;
+        NextActionGet = NextAction.Waiting;
         _diceManager.OnDoneRollDices += (_, args) =>
         {
             Debug.Log("Done Rolling");
             _diceManager.ClearListeners();
             _diceValues = args.Values;
-            _nextAction = NextAction.AttackReroll;
+            NextActionGet = NextAction.AttackReroll;
         };
         _diceManager.RollDices();
     }
-
-    public NextAction NextActionGet => _nextAction;
 }

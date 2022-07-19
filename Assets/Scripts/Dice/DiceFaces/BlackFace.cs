@@ -1,18 +1,16 @@
-﻿using UnityEngine;
+﻿using Manager;
 
-public class BlackFace : DiceFace
+namespace Dice.DiceFaces
 {
-    public override void Action(Unit caster, Unit _, int value, GameState gameState)
+    public class BlackFace : DiceFace
     {
-        caster.TakeDamage(value);
-        if (caster.enabled)
+        public override void Action(Unit.Unit caster, Unit.Unit _, int value, GameState gameState)
         {
-            caster.InvokeAttackDone(false);
+            caster.TakeDamage(value);
+            if (caster.enabled)
+                caster.InvokeAttackDone(false);
+            else
+                gameState.EndTurn();
         }
-        else
-        {
-            gameState.EndTurn();
-        }
-        
     }
 }

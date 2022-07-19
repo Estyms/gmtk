@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ScenesManager : MonoBehaviour
+namespace Manager
 {
-    // don't destroy on load
-    private void Awake()
+    public class ScenesManager : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
-    }
-    
-    // load scene
-    public void LoadScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
+        // don't destroy on load
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
+        // load scene
+        public void LoadScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

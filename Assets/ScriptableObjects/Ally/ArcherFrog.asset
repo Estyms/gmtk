@@ -23,4 +23,4 @@ MonoBehaviour:
   nameString: Archer Frog
   speed: 13
   team: 1
-  canAttack: 0
+  cost: 50

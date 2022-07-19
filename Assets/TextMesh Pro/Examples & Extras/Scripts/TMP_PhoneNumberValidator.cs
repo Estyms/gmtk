@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
+﻿using System;
+using TMPro;
+using UnityEngine;
 
-namespace TMPro
+namespace TextMesh_Pro.Examples___Extras.Scripts
 {
     /// <summary>
-    /// Example of a Custom Character Input Validator to only allow phone number in the (800) 555-1212 format.
+    ///     Example of a Custom Character Input Validator to only allow phone number in the (800) 555-1212 format.
     /// </summary>
     [Serializable]
     //[CreateAssetMenu(fileName = "InputValidator - Phone Numbers.asset", menuName = "TextMeshPro/Input Validators/Phone Numbers")]
@@ -15,7 +15,7 @@ namespace TMPro
         public override char Validate(ref string text, ref int pos, char ch)
         {
             Debug.Log("Trying to validate...");
-            
+
             // Return unless the character is a valid digit
             if (ch < '0' && ch > '9') return (char)0;
 
@@ -23,7 +23,6 @@ namespace TMPro
 
             // Enforce Phone Number format for every character input.
             for (int i = 0; i < length + 1; i++)
-            {
                 switch (i)
                 {
                     case 0:
@@ -97,7 +96,6 @@ namespace TMPro
                         pos = 14;
                         break;
                 }
-            }
 
             return ch;
         }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Manager;
 using UnityEngine;
 
 public class NextStagePanel : MonoBehaviour

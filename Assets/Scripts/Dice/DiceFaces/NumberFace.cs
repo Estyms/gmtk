@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using Manager;
 
-public class NumberFace : DiceFace
+namespace Dice.DiceFaces
 {
-    public override void Action(Unit caster, Unit target, int value, GameState gameState)
+    public class NumberFace : DiceFace
     {
+        public override void Action(Unit.Unit caster, Unit.Unit target, int value, GameState gameState)
+        {
+        }
     }
 }

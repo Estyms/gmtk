@@ -1,21 +1,19 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using TMPro;
+using UnityEngine;
 
-
-namespace TMPro.Examples
+namespace TextMesh_Pro.Examples___Extras.Scripts
 {
-    
     public class ShaderPropAnimator : MonoBehaviour
     {
-
-        private Renderer m_Renderer;
-        private Material m_Material;
-
         public AnimationCurve GlowCurve;
 
         public float m_frame;
+        private Material m_Material;
 
-        void Awake()
+        private Renderer m_Renderer;
+
+        private void Awake()
         {
             // Cache a reference to object's renderer
             m_Renderer = GetComponent<Renderer>();
@@ -24,12 +22,12 @@ namespace TMPro.Examples
             m_Material = m_Renderer.material;
         }
 
-        void Start()
+        private void Start()
         {
             StartCoroutine(AnimateProperties());
         }
 
-        IEnumerator AnimateProperties()
+        private IEnumerator AnimateProperties()
         {
             //float lightAngle;
             float glowPower;

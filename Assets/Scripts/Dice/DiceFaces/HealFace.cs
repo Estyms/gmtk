@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using Manager;
+using UnityEngine;
 
-public class HealFace : DiceFace
+namespace Dice.DiceFaces
 {
-    // ReSharper disable Unity.PerformanceAnalysis
-    public override void Action(Unit caster, Unit target, int value, GameState gameState)
+    public class HealFace : DiceFace
     {
-        caster.Heal(value);
-        Debug.Log("Healed " + value);
-        caster.InvokeAttackDone(false);
+        // ReSharper disable Unity.PerformanceAnalysis
+        public override void Action(Unit.Unit caster, Unit.Unit target, int value, GameState gameState)
+        {
+            caster.Heal(value);
+            Debug.Log("Healed " + value);
+            caster.InvokeAttackDone(false);
+        }
     }
 }

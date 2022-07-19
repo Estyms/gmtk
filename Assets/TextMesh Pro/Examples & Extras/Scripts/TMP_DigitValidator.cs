@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using TMPro;
 
-
-namespace TMPro
+namespace TextMesh_Pro.Examples___Extras.Scripts
 {
     /// <summary>
-    /// EXample of a Custom Character Input Validator to only allow digits from 0 to 9.
+    ///     EXample of a Custom Character Input Validator to only allow digits from 0 to 9.
     /// </summary>
     [Serializable]
     //[CreateAssetMenu(fileName = "InputValidator - Digits.asset", menuName = "TextMeshPro/Input Validators/Digits", order = 100)]
