@@ -2,25 +2,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Dice;
 using Manager;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using ScriptableObjects;
-using TMPro;
 using UnityEngine;
 
 namespace Unit
 {
+    [RequireComponent(typeof(MMHealthBar))]
     public class Unit : MonoBehaviour
     {
         [SerializeField] private UnitSo unitSo;
-        [SerializeField] private MMF_Player takingDamageFeedback;
+        [SerializeField] private MMF_Player takingDamageFeedback, healingFeedback, attackFeedback;
         private AudioSource _audioSource;
         private SpriteRenderer _backGround;
         private SpriteRenderer _criticalHitEffect;
         private int _currentHealth;
         private Transform[] _fightPositions;
-        private TextMeshProUGUI _healthText;
+
+        private MMHealthBar _healthBar;
+
+        // private TextMeshProUGUI _healthText;
         private bool _isDead;
         private Vector3[] _oldFightPositions;
         private SpriteRenderer _spriteRenderer;
@@ -30,10 +33,11 @@ namespace Unit
         {
             _currentHealth = unitSo.health;
             _isDead = false;
-            _healthText = GetComponentInChildren<TextMeshProUGUI>();
+            // _healthText = GetComponentInChildren<TextMeshProUGUI>();
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _spriteRenderer.sprite = unitSo.sprite;
-            _healthText.text = _currentHealth.ToString();
+            // _healthText.text = _currentHealth.ToString();
+            _healthBar = GetComponent<MMHealthBar>();
         }
 
         protected virtual void Start()
@@ -45,6 +49,7 @@ namespace Unit
             _oldFightPositions = new Vector3[2];
             _fightPositions[0] = GameObject.Find("AllyFightPosition").transform;
             _fightPositions[1] = GameObject.Find("EnemyFightPosition").transform;
+            _healthBar.SortingLayerName = "HealthBar";
         }
 
         public event EventHandler OnAttack;
@@ -102,14 +107,8 @@ namespace Unit
             var actionDice = diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
             var numberDice = diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number);
 
-
-            // if (actionDice.Key.DiceSides[actionDice.Value - 1].rarity == Rarity.Critical)
-            // {
-            //     _criticalHitEffect.enabled = true;
-            // }
             OnAttackDone += (_, _) =>
             {
-                // Invoke OnAttack()
                 OnAttack?.Invoke(this, EventArgs.Empty);
                 gameState.EndTurn();
             };
@@ -133,17 +132,22 @@ namespace Unit
         public void TakeDamage(int damage)
         {
             takingDamageFeedback.PlayFeedbacks();
+
             _currentHealth -= Math.Max(0, damage - unitSo.defense);
             Debug.Log("Took " + (damage - unitSo.defense) + " damage");
-            _healthText.text = _currentHealth.ToString();
+            // _healthText.text = _currentHealth.ToString();
+
+            _healthBar.UpdateBar(_currentHealth, 0, unitSo.health, true);
             if (_currentHealth <= 0) Die();
         }
 
         public virtual void Heal(int health)
         {
+            healingFeedback.PlayFeedbacks();
             _currentHealth = Math.Min(health + _currentHealth, unitSo.health);
+            _healthBar.UpdateBar(_currentHealth, 0, unitSo.health, true);
             Debug.Log("Got Healed " + health + " HP");
-            _healthText.text = _currentHealth.ToString();
+            // _healthText.text = _currentHealth.ToString();
         }
 
         // function Die that prints message "Unit died" and destroys game object
