@@ -27,10 +27,12 @@ namespace Unit
         private bool _isDead;
         private Vector3[] _oldFightPositions;
         private SpriteRenderer _spriteRenderer;
+        private MMF_FloatingText _textFloating;
         protected bool CanAttack;
 
         private void Awake()
         {
+            _textFloating = takingDamageFeedback.GetFeedbackOfType<MMF_FloatingText>();
             _currentHealth = unitSo.health;
             _isDead = false;
             // _healthText = GetComponentInChildren<TextMeshProUGUI>();
@@ -77,7 +79,7 @@ namespace Unit
             _audioSource.Play();
             _spriteRenderer.sprite = unitSo.attackSprite;
             // set background layer order to 1
-            _backGround.sortingOrder = 1;
+            // _backGround.sortingOrder = 1;
             _spriteRenderer.sortingOrder = 3;
             target._spriteRenderer.sortingOrder = 2;
 
@@ -131,10 +133,14 @@ namespace Unit
         // function takeDamage(int damage) that reduces current health by damage minus armor and calls Die if health is 0 or less
         public void TakeDamage(int damage)
         {
+            int realDamage = Math.Max(0, damage - unitSo.defense);
+            _textFloating.Intensity = realDamage;
+            _textFloating.Value = realDamage.ToString();
             takingDamageFeedback.PlayFeedbacks();
 
-            _currentHealth -= Math.Max(0, damage - unitSo.defense);
-            Debug.Log("Took " + (damage - unitSo.defense) + " damage");
+
+            _currentHealth -= realDamage;
+            Debug.Log("Took " + realDamage + " damage");
             // _healthText.text = _currentHealth.ToString();
 
             _healthBar.UpdateBar(_currentHealth, 0, unitSo.health, true);
