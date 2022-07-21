@@ -182,12 +182,12 @@ TextureImporter:
       name: coffre et panneaux_3
       rect:
         serializedVersion: 2
-        x: 1869
-        y: 1891.5
-        width: 623.5
-        height: 630.5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 1867
+        y: 1892
+        width: 624
+        height: 630
+      alignment: 9
+      pivot: {x: 0.5023929, y: 0.34090558}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -203,12 +203,12 @@ TextureImporter:
       name: coffre et panneaux_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1261.5
-        width: 623.5
-        height: 630.5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 3
+        y: 1261
+        width: 624
+        height: 630
+      alignment: 9
+      pivot: {x: 0.527946, y: 0.4768016}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
