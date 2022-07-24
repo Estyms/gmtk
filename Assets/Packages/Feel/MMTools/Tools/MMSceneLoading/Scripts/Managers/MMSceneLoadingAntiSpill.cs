@@ -65,7 +65,7 @@ namespace MoreMountains.Tools
 				{
 					if (_destinationScene.IsValid() && _destinationScene.isLoaded)
 					{
-						foreach (var root in _spillSceneRoots)
+						foreach (GameObject root in _spillSceneRoots)
 						{
 							SceneManager.MoveGameObjectToScene(root, _destinationScene);
 						}

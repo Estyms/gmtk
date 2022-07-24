@@ -75,7 +75,7 @@ namespace Unit
 
         public void ShowFight(Unit target)
         {
-            _audioSource.clip = unitSo.attackSound;
+            _audioSource.clip = unitSo.attackSounds[0];
             _audioSource.Play();
             _spriteRenderer.sprite = unitSo.attackSprite;
             // set background layer order to 1
@@ -106,8 +106,8 @@ namespace Unit
             if (!CanAttack) return;
             CanAttack = false;
             // Find Dice and call Roll()
-            var actionDice = diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
-            var numberDice = diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number);
+            KeyValuePair<Dice.Dice, int> actionDice = diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Action);
+            KeyValuePair<Dice.Dice, int> numberDice = diceValues.First(kvp => kvp.Key.DiceType == DiceSo.DiceType.Number);
 
             OnAttackDone += (_, _) =>
             {

@@ -15,18 +15,18 @@ namespace MoreMountains.Tools
         
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
-			var backgroundColorAttribute = attribute as MMBackgroundColorAttribute;
+			MMBackgroundColorAttribute backgroundColorAttribute = attribute as MMBackgroundColorAttribute;
 
 			bool doHighlight = true;
             
 			if (doHighlight)
 			{
-				var color = GetColor(backgroundColorAttribute.Color);
-				var padding = EditorGUIUtility.standardVerticalSpacing;
-				var highlightRect = new Rect(position.x - padding, position.y - padding,
+				Color color = GetColor(backgroundColorAttribute.Color);
+				float padding = EditorGUIUtility.standardVerticalSpacing;
+				Rect highlightRect = new Rect(position.x - padding, position.y - padding,
 					position.width + (padding * 2), position.height + (padding * 2));
 				EditorGUI.DrawRect(highlightRect, color);
-				var cc = GUI.contentColor;
+				Color cc = GUI.contentColor;
 				GUI.contentColor = Color.black;
 				EditorGUI.PropertyField(position, property, label);
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
-using System.Timers;
+using System.Threading;
+using Timer = System.Timers.Timer;
 
 #if (UNITY_ANDROID && !UNITY_EDITOR)
 using System.Text;
@@ -225,7 +226,7 @@ namespace Lofelt.NiceVibrations
             {
                 lofeltHapticsInitalized = true;
 
-                var syncContext = System.Threading.SynchronizationContext.Current;
+                SynchronizationContext syncContext = System.Threading.SynchronizationContext.Current;
                 playbackFinishedTimer.Elapsed += (object obj, System.Timers.ElapsedEventArgs args) =>
                 {
                     // Timer elapsed events are called from a separate thread, so use

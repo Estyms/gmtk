@@ -23,7 +23,7 @@ namespace MoreMountains.Tools
 			Rect position = rect;
 			foreach (SerializedProperty a in prop)
 			{
-				var height = Mathf.Max(LineHeight, EditorGUI.GetPropertyHeight(a));
+				float height = Mathf.Max(LineHeight, EditorGUI.GetPropertyHeight(a));
 				position.height = height;
 
 				if(a.name == "Decision")
@@ -103,7 +103,7 @@ namespace MoreMountains.Tools
 			float height = 0;
 			foreach (SerializedProperty a in property)
 			{
-				var h = Mathf.Max(LineHeight, EditorGUI.GetPropertyHeight(a));
+				float h = Mathf.Max(LineHeight, EditorGUI.GetPropertyHeight(a));
 				if(a.name == "Decision")
 				{
 					height += h * 2;

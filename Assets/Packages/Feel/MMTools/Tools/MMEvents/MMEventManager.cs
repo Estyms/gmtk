@@ -248,7 +248,7 @@ namespace MoreMountains.Tools
 		protected virtual TTarget OnEvent(TEvent eventType) => default;
 		public void OnMMEvent(TEvent eventType)
 		{
-			var item = OnEvent(eventType);
+			TTarget item = OnEvent(eventType);
 			_callback?.Invoke(item);
 		}
 

@@ -5,22 +5,27 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "UnitSo", menuName = "ScriptableObjects/UnitSo", order = 1)]
     public class UnitSo : ScriptableObject
     {
+        [Header("Stats Settings")] 
         public int attack;
         public int defense;
+        public int speed;
+        public int health;
+        public int cost;
+        public int team;
+
+        [Header("Description")] 
         public string description;
+        public string nameString;
+
+        [Header("Sprites")] 
         public Sprite sprite;
         public Sprite attackSprite;
         public Sprite icon;
-        public AudioClip attackSound;
 
-        // variables for the unit life, attack, defense, speed, range, and cost
-        public int health;
+        [Header("Audio")] 
+        public AudioClip[] attackSounds;
+        public AudioClip[] takingDamageSounds;
 
-        // variables for the unit's name, description, and image
-        public string nameString;
-        public int speed;
-        public int team;
-        public int cost;
-        public GameObject prefab;
+        [Header("Prefab")] public GameObject prefab;
     }
 }

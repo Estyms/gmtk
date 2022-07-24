@@ -429,7 +429,7 @@ namespace MoreMountains.Tools
 			PathElements = PathElements ?? new List<MMPathMovementElement>(configuration.Offsets.Length);
 			PathElements.Clear();
 
-			foreach (var offset in configuration.Offsets)
+			foreach (Vector3 offset in configuration.Offsets)
 			{
 				PathElements.Add(new MMPathMovementElement() {Delay = configuration.Delay, PathElementPosition = offset});
 			}

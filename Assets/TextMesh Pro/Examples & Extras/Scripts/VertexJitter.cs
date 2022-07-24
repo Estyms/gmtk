@@ -60,7 +60,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
             hasTextChanged = true;
 
             // Create an Array which contains pre-computed Angle Ranges and Speeds for a bunch of characters.
-            var vertexAnim = new VertexAnim[1024];
+            VertexAnim[] vertexAnim = new VertexAnim[1024];
             for (int i = 0; i < 1024; i++)
             {
                 vertexAnim[i].angleRange = Random.Range(10f, 25f);
@@ -68,7 +68,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
             }
 
             // Cache the vertex data of the text object as the Jitter FX is applied to the original position of the characters.
-            var cachedMeshInfo = textInfo.CopyMeshInfoVertexData();
+            TMP_MeshInfo[] cachedMeshInfo = textInfo.CopyMeshInfoVertexData();
 
             while (true)
             {
@@ -109,7 +109,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     int vertexIndex = textInfo.characterInfo[i].vertexIndex;
 
                     // Get the cached vertices of the mesh used by this text element (character or sprite).
-                    var sourceVertices = cachedMeshInfo[materialIndex].vertices;
+                    Vector3[] sourceVertices = cachedMeshInfo[materialIndex].vertices;
 
                     // Determine the center point of each character at the baseline.
                     //Vector2 charMidBasline = new Vector2((sourceVertices[vertexIndex + 0].x + sourceVertices[vertexIndex + 2].x) / 2, charInfo.baseLine);
@@ -120,7 +120,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     // This is needed so the matrix TRS is applied at the origin for each character.
                     Vector3 offset = charMidBasline;
 
-                    var destinationVertices = textInfo.meshInfo[materialIndex].vertices;
+                    Vector3[] destinationVertices = textInfo.meshInfo[materialIndex].vertices;
 
                     destinationVertices[vertexIndex + 0] = sourceVertices[vertexIndex + 0] - offset;
                     destinationVertices[vertexIndex + 1] = sourceVertices[vertexIndex + 1] - offset;

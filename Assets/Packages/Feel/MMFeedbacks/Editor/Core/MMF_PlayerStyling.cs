@@ -117,7 +117,7 @@ namespace MoreMountains.Feedbacks
 		/// </summary>
 		static public Rect DrawSimpleHeader(ref bool expanded, ref bool activeField, string title)
 		{
-			var e = Event.current;
+			Event e = Event.current;
 
 			// Initialize Rects
 
@@ -185,13 +185,13 @@ namespace MoreMountains.Feedbacks
 				thisDeltaTime = host.ForcedTimescaleMode == TimescaleModes.Scaled ? Time.deltaTime : Time.unscaledDeltaTime;
 			}
             
-			var e = Event.current;
+			Event e = Event.current;
 
 			// Initialize Rects
 			_backgroundRect = GUILayoutUtility.GetRect(1f, 17f);
 			_progressRect = GUILayoutUtility.GetRect(1f, 2f);
 
-			var offset = 4f;
+			float offset = 4f;
             
 			_reorderRect = _backgroundRect;
 			_reorderRect.xMin -= 8f;

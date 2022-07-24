@@ -31,7 +31,7 @@ namespace MoreMountains.Tools
 
 		public static IList<Type> GetBaseTypes(this Type t)
 		{
-			var types = new List<Type>();
+			List<Type> types = new List<Type>();
 			while (t.BaseType != null)
 			{
 				types.Add(t);

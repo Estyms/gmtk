@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -29,8 +30,8 @@ namespace MoreMountains.Tools
 
 			string propertyPath = property.propertyPath.Replace(".Array.data[", "[");
 			object targetObject = property.serializedObject.targetObject;
-			var elements = propertyPath.Split('.');
-			foreach (var element in elements)
+			string[] elements = propertyPath.Split('.');
+			foreach (string element in elements)
 			{
 				if (!element.Contains("["))
 				{
@@ -74,12 +75,12 @@ namespace MoreMountains.Tools
 
 		private static object GetPropertyValue(object source, string propertyName, int index)
 		{
-			var enumerable = GetPropertyValue(source, propertyName) as System.Collections.IEnumerable;
+			IEnumerable enumerable = GetPropertyValue(source, propertyName) as System.Collections.IEnumerable;
 			if (enumerable == null)
 			{
 				return null;
 			}
-			var enumerator = enumerable.GetEnumerator();
+			IEnumerator enumerator = enumerable.GetEnumerator();
 			for (int i = 0; i <= index; i++)
 			{
 				if (!enumerator.MoveNext())

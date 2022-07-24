@@ -92,7 +92,7 @@ namespace MoreMountains.Tools
 				float newX = 0f;
 				float newY = 0f;
 
-				var gyroGravity = LerpedCalibratedGyroscopeGravity;
+				Vector3 gyroGravity = LerpedCalibratedGyroscopeGravity;
 				if (gyroGravity.x > 0)
 				{
 					newX = MMMaths.Remap(LerpedCalibratedGyroscopeGravity.x, 0.5f, 0, cam.MinRotation.x, 0);
@@ -110,7 +110,7 @@ namespace MoreMountains.Tools
 					newY = MMMaths.Remap(LerpedCalibratedGyroscopeGravity.y, 0f, -0.5f, 0f, cam.MaxRotation.y);
 				}
 
-				var camTransform = cam.Cam.transform;
+				Transform camTransform = cam.Cam.transform;
 
 				if (cam.AnimatedPosition != null)
 				{
@@ -131,7 +131,7 @@ namespace MoreMountains.Tools
 					camTransform.localEulerAngles = cam.InitialAngles;
 				}
 
-				var rotationTransform = cam.RotationCenter.transform;
+				Transform rotationTransform = cam.RotationCenter.transform;
 				camTransform.RotateAround(rotationTransform.position, rotationTransform.up, newX);
 				camTransform.RotateAround(rotationTransform.position, rotationTransform.right, newY);
 

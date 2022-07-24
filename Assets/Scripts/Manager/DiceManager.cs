@@ -29,7 +29,7 @@ namespace Manager
         {
             audioSource.Play();
             Rolling = true;
-            var dict = new ConcurrentDictionary<Dice.Dice, int>();
+            ConcurrentDictionary<Dice.Dice, int> dict = new ConcurrentDictionary<Dice.Dice, int>();
 
             OnRollDices += (sender, args) =>
             {

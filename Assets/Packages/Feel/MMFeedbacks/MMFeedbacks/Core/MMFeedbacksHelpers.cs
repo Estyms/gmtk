@@ -214,7 +214,7 @@ namespace MoreMountains.Feedbacks
 		public static Component GetComponentNoAlloc(this GameObject @this, System.Type componentType)
 		{
 			@this.GetComponents(componentType, m_ComponentCache);
-			var component = m_ComponentCache.Count > 0 ? m_ComponentCache[0] : null;
+			Component component = m_ComponentCache.Count > 0 ? m_ComponentCache[0] : null;
 			m_ComponentCache.Clear();
 			return component;
 		}
@@ -264,8 +264,8 @@ namespace MoreMountains.Feedbacks
 
 			string propertyPath = property.propertyPath.Replace(".Array.data[", "[");
 			object targetObject = property.serializedObject.targetObject;
-			var elements = propertyPath.Split('.');
-			foreach (var element in elements)
+			string[] elements = propertyPath.Split('.');
+			foreach (string element in elements)
 			{
 				if (!element.Contains("["))
 				{
@@ -309,12 +309,12 @@ namespace MoreMountains.Feedbacks
 
 		private static object MMFGetPropertyValue(object source, string propertyName, int index)
 		{
-			var enumerable = MMFGetPropertyValue(source, propertyName) as System.Collections.IEnumerable;
+			IEnumerable enumerable = MMFGetPropertyValue(source, propertyName) as System.Collections.IEnumerable;
 			if (enumerable == null)
 			{
 				return null;
 			}
-			var enumerator = enumerable.GetEnumerator();
+			IEnumerator enumerator = enumerable.GetEnumerator();
 			for (int i = 0; i <= index; i++)
 			{
 				if (!enumerator.MoveNext())
@@ -418,7 +418,7 @@ namespace MoreMountains.Feedbacks
 
 		public static IList<Type> GetBaseTypes(this Type t)
 		{
-			var types = new List<Type>();
+			List<Type> types = new List<Type>();
 			while (t.BaseType != null)
 			{
 				types.Add(t);

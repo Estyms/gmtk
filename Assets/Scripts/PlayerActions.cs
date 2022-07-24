@@ -73,7 +73,7 @@ public class PlayerActions : MonoBehaviour
                                 NextActionGet = NextAction.Waiting;
                                 diceTarget.OnDoneRoll += (_, args) =>
                                 {
-                                    var kv = _diceValues.First(kvp => kvp.Key.DiceType == diceTarget.DiceType);
+                                    KeyValuePair<Dice.Dice, int> kv = _diceValues.First(kvp => kvp.Key.DiceType == diceTarget.DiceType);
                                     _diceValues.Remove(diceTarget);
                                     _diceValues.Add(diceTarget, args.Value);
                                     NextActionGet = NextAction.Attack;

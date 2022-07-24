@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 10
   defense: 2
+  speed: 0
+  health: 20
+  cost: 0
+  team: 2
   description: 
+  nameString: Hamster
   sprite: {fileID: -563859520, guid: dec53e7414c55ed4780ee10276553400, type: 3}
   attackSprite: {fileID: 87486801, guid: dec53e7414c55ed4780ee10276553400, type: 3}
   icon: {fileID: -428932968, guid: d0cc0e6f2f11ae647ab6f4303dbf36d8, type: 3}
-  attackSound: {fileID: 8300000, guid: af0dbc205834a48f0a8893e0947ffbbb, type: 3}
-  health: 20
-  nameString: Enemy name string
-  speed: 0
-  team: 2
-  canAttack: 0
+  attackSounds: []
+  takingDamageSounds: []
+  prefab: {fileID: 8862277681259253039, guid: 01333d83ce2c91047acf910dd0888fdd, type: 3}

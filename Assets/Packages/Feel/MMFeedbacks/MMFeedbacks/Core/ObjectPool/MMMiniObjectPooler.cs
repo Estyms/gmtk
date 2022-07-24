@@ -83,7 +83,7 @@ namespace MoreMountains.Feedbacks
             
 			if (_pools.Count == 0)
 			{
-				var pools = FindObjectsOfType<MMMiniObjectPool>();
+				MMMiniObjectPool[] pools = FindObjectsOfType<MMMiniObjectPool>();
 				if (pools.Length > 0)
 				{
 					_pools.AddRange(pools);

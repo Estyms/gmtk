@@ -51,7 +51,7 @@ namespace MoreMountains.Tools
 			{
 				if (!EqualityComparer<T>.Default.Equals(value, _value))
 				{
-					var prev = _value;
+					T prev = _value;
 					_value = value;
 					OnValueChanged?.Invoke();
 					OnValueChangedTo?.Invoke(_value);

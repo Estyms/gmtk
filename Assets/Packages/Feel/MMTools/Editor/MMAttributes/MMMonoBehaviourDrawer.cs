@@ -214,7 +214,7 @@ namespace MoreMountains.Tools
 		{
 			Rect verticalGroup = EditorGUILayout.BeginVertical();
 
-			var leftBorderRect = new Rect(verticalGroup.xMin + 5, verticalGroup.yMin - 10, 3f, verticalGroup.height + 20);
+			Rect leftBorderRect = new Rect(verticalGroup.xMin + 5, verticalGroup.yMin - 10, 3f, verticalGroup.height + 20);
 			leftBorderRect.xMin = 15f;
 			leftBorderRect.xMax = 18f;
 			EditorGUI.DrawRect(leftBorderRect, groupData.GroupColor); 

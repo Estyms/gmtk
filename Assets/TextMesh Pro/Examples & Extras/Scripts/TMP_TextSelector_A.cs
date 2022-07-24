@@ -51,7 +51,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     Color32 c = new((byte)Random.Range(0, 255), (byte)Random.Range(0, 255), (byte)Random.Range(0, 255),
                         255);
 
-                    var vertexColors = m_TextMeshPro.textInfo.meshInfo[meshIndex].colors32;
+                    Color32[] vertexColors = m_TextMeshPro.textInfo.meshInfo[meshIndex].colors32;
 
                     vertexColors[vertexIndex + 0] = c;
                     vertexColors[vertexIndex + 1] = c;
@@ -123,7 +123,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
 
                     //Debug.Log("Mouse Position: " + Input.mousePosition.ToString("f3") + "  Word Position: " + wordPOS.ToString("f3"));
 
-                    var vertexColors = m_TextMeshPro.textInfo.meshInfo[0].colors32;
+                    Color32[] vertexColors = m_TextMeshPro.textInfo.meshInfo[0].colors32;
 
                     Color32 c = new((byte)Random.Range(0, 255), (byte)Random.Range(0, 255), (byte)Random.Range(0, 255),
                         255);

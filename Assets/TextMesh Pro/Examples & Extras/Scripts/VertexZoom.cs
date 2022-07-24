@@ -58,11 +58,11 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
             TMP_TextInfo textInfo = m_TextComponent.textInfo;
 
             Matrix4x4 matrix;
-            var cachedMeshInfoVertexData = textInfo.CopyMeshInfoVertexData();
+            TMP_MeshInfo[] cachedMeshInfoVertexData = textInfo.CopyMeshInfoVertexData();
 
             // Allocations for sorting of the modified scales
-            var modifiedCharScale = new List<float>();
-            var scaleSortingOrder = new List<int>();
+            List<float> modifiedCharScale = new List<float>();
+            List<int> scaleSortingOrder = new List<int>();
 
             hasTextChanged = true;
 
@@ -105,7 +105,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     int vertexIndex = textInfo.characterInfo[i].vertexIndex;
 
                     // Get the cached vertices of the mesh used by this text element (character or sprite).
-                    var sourceVertices = cachedMeshInfoVertexData[materialIndex].vertices;
+                    Vector3[] sourceVertices = cachedMeshInfoVertexData[materialIndex].vertices;
 
                     // Determine the center point of each character at the baseline.
                     //Vector2 charMidBasline = new Vector2((sourceVertices[vertexIndex + 0].x + sourceVertices[vertexIndex + 2].x) / 2, charInfo.baseLine);
@@ -116,7 +116,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     // This is needed so the matrix TRS is applied at the origin for each character.
                     Vector3 offset = charMidBasline;
 
-                    var destinationVertices = textInfo.meshInfo[materialIndex].vertices;
+                    Vector3[] destinationVertices = textInfo.meshInfo[materialIndex].vertices;
 
                     destinationVertices[vertexIndex + 0] = sourceVertices[vertexIndex + 0] - offset;
                     destinationVertices[vertexIndex + 1] = sourceVertices[vertexIndex + 1] - offset;
@@ -151,8 +151,8 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     destinationVertices[vertexIndex + 3] += offset;
 
                     // Restore Source UVS which have been modified by the sorting
-                    var sourceUVs0 = cachedMeshInfoVertexData[materialIndex].uvs0;
-                    var destinationUVs0 = textInfo.meshInfo[materialIndex].uvs0;
+                    Vector2[] sourceUVs0 = cachedMeshInfoVertexData[materialIndex].uvs0;
+                    Vector2[] destinationUVs0 = textInfo.meshInfo[materialIndex].uvs0;
 
                     destinationUVs0[vertexIndex + 0] = sourceUVs0[vertexIndex + 0];
                     destinationUVs0[vertexIndex + 1] = sourceUVs0[vertexIndex + 1];
@@ -160,8 +160,8 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     destinationUVs0[vertexIndex + 3] = sourceUVs0[vertexIndex + 3];
 
                     // Restore Source Vertex Colors
-                    var sourceColors32 = cachedMeshInfoVertexData[materialIndex].colors32;
-                    var destinationColors32 = textInfo.meshInfo[materialIndex].colors32;
+                    Color32[] sourceColors32 = cachedMeshInfoVertexData[materialIndex].colors32;
+                    Color32[] destinationColors32 = textInfo.meshInfo[materialIndex].colors32;
 
                     destinationColors32[vertexIndex + 0] = sourceColors32[vertexIndex + 0];
                     destinationColors32[vertexIndex + 1] = sourceColors32[vertexIndex + 1];

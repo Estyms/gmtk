@@ -88,7 +88,7 @@ namespace Manager
         private void Shift()
         {
             Unit.Unit first = _units[0];
-            var newArray = new Unit.Unit[_units.Length - 1];
+            Unit.Unit[] newArray = new Unit.Unit[_units.Length - 1];
             Array.Copy(_units, 1, newArray, 0, _units.Length - 1);
             _units = newArray.Concat(new[] { first }).ToArray();
 

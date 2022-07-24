@@ -24,7 +24,7 @@ namespace MoreMountains.Tools
  
 			for (int i = 0; i < sceneCount; i++)
 			{
-				var scene = SceneManager.GetSceneAt(i);
+				Scene scene = SceneManager.GetSceneAt(i);
 				if (scene.isLoaded)
 				{
 					loadedScenes.Add(scene);

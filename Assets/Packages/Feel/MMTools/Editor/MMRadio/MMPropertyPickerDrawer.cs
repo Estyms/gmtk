@@ -317,7 +317,7 @@ namespace MoreMountains.Tools
 			if (!_targetIsScriptableObject)
 			{
 				// Find all fields
-				var fieldsList = property.FindPropertyRelative("TargetComponent").objectReferenceValue.GetType()
+				List<FieldInfo> fieldsList = property.FindPropertyRelative("TargetComponent").objectReferenceValue.GetType()
 					.GetFields(BindingFlags.Public | BindingFlags.Instance)
 					.Where(field =>
 						(AuthorizedType(_authorizedTypes, field.FieldType))
@@ -332,7 +332,7 @@ namespace MoreMountains.Tools
 				}
 
 				// finds all properties
-				var propertiesList = property.FindPropertyRelative("TargetComponent").objectReferenceValue.GetType()
+				List<PropertyInfo> propertiesList = property.FindPropertyRelative("TargetComponent").objectReferenceValue.GetType()
 					.GetProperties(BindingFlags.Public | BindingFlags.Instance)
 					.Where(prop =>
 						(AuthorizedType(_authorizedTypes, prop.PropertyType))
@@ -350,7 +350,7 @@ namespace MoreMountains.Tools
 			{
 				// if this is a scriptable object
 				// finds all fields
-				var fieldsList = property.FindPropertyRelative("TargetObject").objectReferenceValue.GetType()
+				List<FieldInfo> fieldsList = property.FindPropertyRelative("TargetObject").objectReferenceValue.GetType()
 					.GetFields(BindingFlags.Public | BindingFlags.Instance)
 					.Where(field =>
 						(AuthorizedType(_authorizedTypes, field.FieldType))
@@ -365,7 +365,7 @@ namespace MoreMountains.Tools
 				}
 
 				// finds all properties
-				var propertiesList = property.FindPropertyRelative("TargetObject").objectReferenceValue.GetType()
+				List<PropertyInfo> propertiesList = property.FindPropertyRelative("TargetObject").objectReferenceValue.GetType()
 					.GetProperties(BindingFlags.Public | BindingFlags.Instance)
 					.Where(prop =>
 						(AuthorizedType(_authorizedTypes, prop.PropertyType))

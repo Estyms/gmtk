@@ -20,7 +20,7 @@ namespace MoreMountains.Tools
 		public override void OnGUI(Rect rect, SerializedProperty prop, GUIContent label)
 		{
 			// determines the height of the Action property
-			var height = Mathf.Max(LineHeight, EditorGUI.GetPropertyHeight(prop));
+			float height = Mathf.Max(LineHeight, EditorGUI.GetPropertyHeight(prop));
 			Rect position = rect;
 			position.height = height;
 
@@ -76,7 +76,7 @@ namespace MoreMountains.Tools
 		/// <returns></returns>
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
 		{
-			var h = Mathf.Max(LineHeight, EditorGUI.GetPropertyHeight(property));
+			float h = Mathf.Max(LineHeight, EditorGUI.GetPropertyHeight(property));
 			float height = h * 2; // 2 lines, one for the dropdown, one for the property field
 			return height;
 		}

@@ -24,13 +24,13 @@ namespace MoreMountains.Tools
 		protected static void CleanupMissingScripts()
 		{
 			_listOfEmptyDirectories.Clear();
-			var assetsDir = Application.dataPath + Path.DirectorySeparatorChar;
+			string assetsDir = Application.dataPath + Path.DirectorySeparatorChar;
 			GetEmptyDirectories(new DirectoryInfo(assetsDir), _listOfEmptyDirectories);
 
 			if (0 < _listOfEmptyDirectories.Count)
 			{
 				_consoleLog = "[MMCleanEmptyFolders] Removed "+ _listOfEmptyDirectories.Count + " empty directories:\n";
-				foreach (var d in _listOfEmptyDirectories)
+				foreach (DirectoryInfo d in _listOfEmptyDirectories)
 				{
 					_consoleLog += "· "+ d.FullName.Replace(assetsDir, "") + "\n";
 					FileUtil.DeleteFileOrDirectory(d.FullName);

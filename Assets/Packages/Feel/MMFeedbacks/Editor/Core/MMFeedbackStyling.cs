@@ -59,7 +59,7 @@ namespace MoreMountains.Feedbacks
 		{
 			// Helper to draw a separator line
 
-			var rect = GUILayoutUtility.GetRect(1f, 1f);
+			Rect rect = GUILayoutUtility.GetRect(1f, 1f);
 
 			rect.xMin = 0f;
 			rect.width += 4f;
@@ -75,35 +75,35 @@ namespace MoreMountains.Feedbacks
 		/// </summary>
 		static public Rect DrawSimpleHeader(ref bool expanded, ref bool activeField, string title)
 		{
-			var e = Event.current;
+			Event e = Event.current;
 
 			// Initialize Rects
 
-			var backgroundRect = GUILayoutUtility.GetRect(1f, 17f);
+			Rect backgroundRect = GUILayoutUtility.GetRect(1f, 17f);
             
-			var reorderRect = backgroundRect;
+			Rect reorderRect = backgroundRect;
 			reorderRect.xMin -= 8f;
 			reorderRect.y += 5f;
 			reorderRect.width = 9f;
 			reorderRect.height = 9f;
 
-			var labelRect = backgroundRect;
+			Rect labelRect = backgroundRect;
 			labelRect.xMin += 32f;
 			labelRect.xMax -= 20f;
 
-			var foldoutRect = backgroundRect;
+			Rect foldoutRect = backgroundRect;
 			foldoutRect.y += 1f;
 			foldoutRect.width = 13f;
 			foldoutRect.height = 13f;
 
-			var toggleRect = backgroundRect;
+			Rect toggleRect = backgroundRect;
 			toggleRect.x += 16f;
 			toggleRect.y += 2f;
 			toggleRect.width = 13f;
 			toggleRect.height = 13f;
 
-			var menuIcon = PaneOptionsIcon;
-			var menuRect = new Rect(labelRect.xMax + 4f, labelRect.y + 4f, menuIcon.width, menuIcon.height);
+			Texture2D menuIcon = PaneOptionsIcon;
+			Rect menuRect = new Rect(labelRect.xMax + 4f, labelRect.y + 4f, menuIcon.width, menuIcon.height);
             
 			// Background rect should be full-width
 			backgroundRect.xMin = 0f;
@@ -141,45 +141,45 @@ namespace MoreMountains.Feedbacks
 			float thisTime = timing.TimescaleMode == TimescaleModes.Scaled ? Time.time : Time.unscaledTime;
 			float thisDeltaTime = timing.TimescaleMode == TimescaleModes.Scaled ? Time.deltaTime : Time.unscaledDeltaTime;
             
-			var e = Event.current;
+			Event e = Event.current;
 
 			// Initialize Rects
-			var backgroundRect = GUILayoutUtility.GetRect(1f, 17f);
+			Rect backgroundRect = GUILayoutUtility.GetRect(1f, 17f);
 
-			var progressRect = GUILayoutUtility.GetRect(1f, 2f);
+			Rect progressRect = GUILayoutUtility.GetRect(1f, 2f);
 
-			var offset = 4f;
+			float offset = 4f;
 
-			var reorderRect = backgroundRect;
+			Rect reorderRect = backgroundRect;
 			reorderRect.xMin -= 8f;
 			reorderRect.y += 5f;
 			reorderRect.width = 9f;
 			reorderRect.height = 9f;
 
-			var labelRect = backgroundRect;
+			Rect labelRect = backgroundRect;
 			labelRect.xMin += 32f + offset;
 			labelRect.xMax -= 20f;
 
-			var foldoutRect = backgroundRect;
+			Rect foldoutRect = backgroundRect;
 			foldoutRect.y += 1f;
 			foldoutRect.xMin += offset;
 			foldoutRect.width = 13f;
 			foldoutRect.height = 13f;
 
-			var toggleRect = backgroundRect;
+			Rect toggleRect = backgroundRect;
 			toggleRect.x += 16f;
 			toggleRect.xMin += offset;
 			toggleRect.y += 2f;
 			toggleRect.width = 13f;
 			toggleRect.height = 13f;
 
-			var menuIcon = PaneOptionsIcon;
-			var menuRect = new Rect(labelRect.xMax + 4f, labelRect.y + 4f, menuIcon.width, menuIcon.height);
+			Texture2D menuIcon = PaneOptionsIcon;
+			Rect menuRect = new Rect(labelRect.xMax + 4f, labelRect.y + 4f, menuIcon.width, menuIcon.height);
 
 			_timingStyle.normal.textColor = EditorGUIUtility.isProSkin ? _timingDark : _timingLight;
 			_timingStyle.alignment = TextAnchor.MiddleRight;
 
-			var colorRect = new Rect(labelRect.xMin, labelRect.yMin, 5f, 17f);
+			Rect colorRect = new Rect(labelRect.xMin, labelRect.yMin, 5f, 17f);
 			colorRect.xMin = 0f;
 			colorRect.xMax = 5f;
 			EditorGUI.DrawRect(colorRect, feedbackColor);
@@ -216,7 +216,7 @@ namespace MoreMountains.Feedbacks
 			// Direction ----------------------------------------------------------------------------------------------
 
 			float directionRectWidth = 70f;
-			var directionRect = new Rect(labelRect.xMax - directionRectWidth, labelRect.yMin, directionRectWidth, 17f);
+			Rect directionRect = new Rect(labelRect.xMax - directionRectWidth, labelRect.yMin, directionRectWidth, 17f);
 			directionRect.xMin = labelRect.xMax - directionRectWidth;
 			directionRect.xMax = labelRect.xMax;
 
@@ -278,7 +278,7 @@ namespace MoreMountains.Feedbacks
 			//"[ 2s + 3 x (4s + 1s) ]"
 
 			float timingRectWidth = 150f;
-			var timingRect = new Rect(labelRect.xMax - timingRectWidth, labelRect.yMin, timingRectWidth, 17f);
+			Rect timingRect = new Rect(labelRect.xMax - timingRectWidth, labelRect.yMin, timingRectWidth, 17f);
 			timingRect.xMin = labelRect.xMax - timingRectWidth;
 			timingRect.xMax = labelRect.xMax;
 			EditorGUI.LabelField(timingRect, timingInfo, _timingStyle);
@@ -332,7 +332,7 @@ namespace MoreMountains.Feedbacks
 			{
 				if (menuRect.Contains(e.mousePosition))
 				{
-					var menu = new GenericMenu();
+					GenericMenu menu = new GenericMenu();
 					fillGenericMenu(menu);
 					menu.DropDown(new Rect(new Vector2(menuRect.x, menuRect.yMax), Vector2.zero));
 					e.Use();

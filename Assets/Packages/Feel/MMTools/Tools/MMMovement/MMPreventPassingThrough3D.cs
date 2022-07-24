@@ -103,7 +103,7 @@ namespace MoreMountains.Tools
 						this.gameObject.SendMessage("PreventedCollision3D", hitInfo, SendMessageOptions.DontRequireReceiver);
 						if (RepositionRigidbody)
 						{
-							var hitLayer = hitInfo.collider.gameObject.layer;
+							int hitLayer = hitInfo.collider.gameObject.layer;
 							if (0 != (1 << hitLayer & RepositionRigidbodyLayerMask))
 							{
 								this.transform.position = hitInfo.point - (_lastMovement / movementMagnitude) * _adjustedSmallestBoundsWidth;

@@ -115,7 +115,7 @@ namespace MoreMountains.Tools
 			}
 			if (_pools.Count == 0)
 			{
-				var pools = FindObjectsOfType<MMObjectPool>();
+				MMObjectPool[] pools = FindObjectsOfType<MMObjectPool>();
 				if (pools.Length > 0)
 				{
 					_pools.AddRange(pools);

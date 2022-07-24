@@ -1,0 +1,72 @@
+{
+  "maps": [
+    {
+      "levels": [
+        {
+          "level": 1,
+          "isUnlocked": true,
+          "isCompleted": false
+        },
+        {
+          "level": 2,
+          "isUnlocked": false,
+          "isCompleted": false
+        },
+        {
+          "level": 3,
+          "isUnlocked": false,
+          "isCompleted": false
+        },
+        {
+          "level": 4,
+          "isUnlocked": false,
+          "isCompleted": false
+        },
+        {
+          "level": 5,
+          "isUnlocked": false,
+          "isCompleted": false
+        },
+        {
+          "level": 6,
+          "isUnlocked": false,
+          "isCompleted": false
+        }
+      ]
+    },
+    {
+      "levels": [
+        {
+          "level": 2,
+          "isUnlocked": true,
+          "isCompleted": false
+        },
+        {
+          "level": 2,
+          "isUnlocked": false,
+          "isCompleted": false
+        },
+        {
+          "level": 3,
+          "isUnlocked": false,
+          "isCompleted": false
+        },
+        {
+          "level": 4,
+          "isUnlocked": false,
+          "isCompleted": false
+        },
+        {
+          "level": 5,
+          "isUnlocked": false,
+          "isCompleted": false
+        },
+        {
+          "level": 6,
+          "isUnlocked": false,
+          "isCompleted": false
+        }
+      ]
+    }
+  ]
+}

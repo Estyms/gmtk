@@ -70,7 +70,7 @@ namespace MoreMountains.Tools
 			get
 			{
 				if (_instances == null) yield break;
-				foreach (var inst in _instances)
+				foreach (WeakReference<T> inst in _instances)
 				{
 					if (inst.TryGetTarget(out T target))
 					{
@@ -84,7 +84,7 @@ namespace MoreMountains.Tools
 		{
 			if (_instances == null) return null;
 			if (selector == null) return Any;
-			foreach (var inst in _instances)
+			foreach (WeakReference<T> inst in _instances)
 			{
 				if (inst.TryGetTarget(out T target) && selector(target))
 				{

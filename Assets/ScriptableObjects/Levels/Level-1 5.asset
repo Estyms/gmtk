@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7967571b554d5e8cf7fc1e43dcafe1, type: 3}
+  m_Name: Level-1 5
+  m_EditorClassIdentifier: 
+  level: 4
+  background: {fileID: 21300000, guid: 042109b09fdc81b4b9324ef01bc760bc, type: 3}
+  enemies:
+  - {fileID: 11400000, guid: cab46cc540343a14184ef69a51ed6ede, type: 2}
+  - {fileID: 11400000, guid: 7fb4f896ad4fa4648b3bf609876614fe, type: 2}
+  waves: 5
+  gold: 50
+  unit: {fileID: 0}

@@ -34,7 +34,7 @@ namespace MoreMountains.Tools
 				}
 
 				bool found = false;
-				for (var i = 0; i < _dropdownValues.Length; i++)
+				for (int i = 0; i < _dropdownValues.Length; i++)
 				{
 					if ((_propertyType == typeof(string)) && property.stringValue == _dropdownValues[i])
 					{

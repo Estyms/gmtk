@@ -20,14 +20,14 @@ namespace MoreMountains.Tools
 		#if  UNITY_EDITOR
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
-			var type = property.FindPropertyRelative("MMTweenDefinitionType");
+			SerializedProperty type = property.FindPropertyRelative("MMTweenDefinitionType");
             
 			EditorGUI.BeginProperty(position, label, property);
 
 			position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
             
-			var definitionTypeRect = new Rect(position.x, position.y, position.width, _lineHeight);
-			var curveRect = new Rect(position.x, position.y + _lineHeight + _lineMargin, position.width, _lineHeight);
+			Rect definitionTypeRect = new Rect(position.x, position.y, position.width, _lineHeight);
+			Rect curveRect = new Rect(position.x, position.y + _lineHeight + _lineMargin, position.width, _lineHeight);
 
 			EditorGUI.PropertyField(definitionTypeRect, property.FindPropertyRelative("MMTweenDefinitionType"), GUIContent.none);
 			if (type.enumValueIndex == 0)

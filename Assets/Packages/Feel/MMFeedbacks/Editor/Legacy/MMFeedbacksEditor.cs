@@ -93,7 +93,7 @@ namespace MoreMountains.Feedbacks
 
 			static public void PasteAll(MMFeedbacksEditor targetEditor)
 			{
-				var sourceFeedbacks = new SerializedObject(MMFeedbacksConfiguration.Instance._mmFeedbacks);
+				SerializedObject sourceFeedbacks = new SerializedObject(MMFeedbacksConfiguration.Instance._mmFeedbacks);
 				SerializedProperty feedbacks = sourceFeedbacks.FindProperty("Feedbacks");
 
 				for (int i = 0; i < feedbacks.arraySize; i++)
@@ -248,7 +248,7 @@ namespace MoreMountains.Feedbacks
 				return;
 			}
             
-			var e = Event.current;
+			Event e = Event.current;
 			serializedObject.Update();
 			EditorGUI.BeginChangeCheck();
 
@@ -644,7 +644,7 @@ namespace MoreMountains.Feedbacks
 			if (wasRemoved)
 			{
 				GameObject gameObject = (target as MMFeedbacks).gameObject;
-				foreach (var c in gameObject.GetComponents<Component>())
+				foreach (Component c in gameObject.GetComponents<Component>())
 				{
 					if (c != null)
 					{
@@ -717,7 +717,7 @@ namespace MoreMountains.Feedbacks
 
 					if (EditorGUI.EndChangeCheck())
 					{
-						foreach (var f in (target as MMFeedbacks).Feedbacks)
+						foreach (MMFeedback f in (target as MMFeedbacks).Feedbacks)
 							f.hideFlags = _debugView ? HideFlags.HideInInspector : HideFlags.None;
 						UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
 					}

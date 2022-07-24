@@ -235,9 +235,9 @@ namespace MoreMountains.Tools
 				_axisDestination.x = xPosition;
 				_axisDestination.y = _spectrumBoxBottomY - spectrumValue;
 
-				var p1 = _axisOrigin;
-				var p2 = _axisDestination;
-				var thickness = 3;
+				Vector3 p1 = _axisOrigin;
+				Vector3 p2 = _axisDestination;
+				int thickness = 3;
 				Handles.DrawBezier(p1, p2, p1, p2, _spectrumColor, null, thickness);
 			}
 

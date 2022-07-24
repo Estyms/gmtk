@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ac9ed42129411698eea74e0dff89ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Game
+  sceneName: Map
 --- !u!61 &331651224
 BoxCollider2D:
   m_ObjectHideFlags: 0

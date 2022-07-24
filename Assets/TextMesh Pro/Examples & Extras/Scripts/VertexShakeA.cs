@@ -57,7 +57,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
             TMP_TextInfo textInfo = m_TextComponent.textInfo;
 
             Matrix4x4 matrix;
-            var copyOfVertices = new Vector3[0][];
+            Vector3[][] copyOfVertices = new Vector3[0][];
 
             hasTextChanged = true;
 
@@ -114,7 +114,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                         int vertexIndex = textInfo.characterInfo[j].vertexIndex;
 
                         // Get the vertices of the mesh used by this text element (character or sprite).
-                        var sourceVertices = textInfo.meshInfo[materialIndex].vertices;
+                        Vector3[] sourceVertices = textInfo.meshInfo[materialIndex].vertices;
 
                         // Need to translate all 4 vertices of each quad to aligned with center of character.
                         // This is needed so the matrix TRS is applied at the origin for each character.

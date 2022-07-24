@@ -109,7 +109,7 @@ namespace MoreMountains.Feel
 			_targets = new List<Vector3>();
 
 			Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 5f);
-			foreach (var hitCollider in hitColliders)
+			foreach (Collider hitCollider in hitColliders)
 			{
 				Vector3 enemyPosition = hitCollider.transform.position;
 				Vector3 direction = this.transform.position - enemyPosition;

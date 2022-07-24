@@ -3,8 +3,11 @@ using UnityEditor;
 using UnityEditor.PackageManager.Requests;
 using UnityEditor.PackageManager;
 #endif
+using System;
+using System.Reflection;
 using UnityEngine;
 using System.Threading.Tasks;
+using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 
 namespace MoreMountains.Feedbacks
 {
@@ -64,10 +67,10 @@ namespace MoreMountains.Feedbacks
 		/// </summary>
 		public static void ClearConsole()
 		{
-			var logEntries = System.Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
+			Type logEntries = System.Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
 			if (logEntries != null)
 			{
-				var clearMethod = logEntries.GetMethod("Clear", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+				MethodInfo clearMethod = logEntries.GetMethod("Clear", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
 				if (clearMethod != null)
 				{
 					clearMethod.Invoke(null, null);    
@@ -83,7 +86,7 @@ namespace MoreMountains.Feedbacks
 			if (_currentIndex < _packages.Length)
 			{
 				bool packageFound = false;
-				foreach (var package in _listRequest.Result)
+				foreach (PackageInfo package in _listRequest.Result)
 				{
 					if (package.name == _packages[_currentIndex])
 					{

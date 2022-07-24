@@ -62,9 +62,9 @@ namespace Lofelt.NiceVibrations
         public override void OnImportAsset(AssetImportContext ctx)
         {
             // Load .haptic clip from file
-            var fileName = System.IO.Path.GetFileNameWithoutExtension(ctx.assetPath);
-            var jsonBytes = File.ReadAllBytes(ctx.assetPath);
-            var hapticClip = HapticClip.CreateInstance<HapticClip>();
+            string fileName = System.IO.Path.GetFileNameWithoutExtension(ctx.assetPath);
+            byte[] jsonBytes = File.ReadAllBytes(ctx.assetPath);
+            HapticClip hapticClip = HapticClip.CreateInstance<HapticClip>();
             hapticClip.json = jsonBytes;
 
 #if !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
@@ -100,9 +100,9 @@ namespace Lofelt.NiceVibrations
             }
             else
             {
-                var lastErrorPtr = nv_plugin_get_last_error();
-                var lastErrorLength = (int)nv_plugin_get_last_error_length();
-                var lastError = PtrToStringUTF8(lastErrorPtr, lastErrorLength);
+                IntPtr lastErrorPtr = nv_plugin_get_last_error();
+                int lastErrorLength = (int)nv_plugin_get_last_error_length();
+                string lastError = PtrToStringUTF8(lastErrorPtr, lastErrorLength);
                 Debug.LogWarning($"Failed to convert haptic clip {ctx.assetPath} to gamepad rumble: {lastError}");
             }
 

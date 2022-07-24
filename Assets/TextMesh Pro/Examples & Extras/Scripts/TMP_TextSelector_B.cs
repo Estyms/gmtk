@@ -82,7 +82,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     int vertexIndex = m_TextMeshPro.textInfo.characterInfo[charIndex].vertexIndex;
 
                     // Get a reference to the vertices array.
-                    var vertices = m_TextMeshPro.textInfo.meshInfo[materialIndex].vertices;
+                    Vector3[] vertices = m_TextMeshPro.textInfo.meshInfo[materialIndex].vertices;
 
                     // Determine the center point of the character.
                     Vector2 charMidBasline = (vertices[vertexIndex + 0] + vertices[vertexIndex + 2]) / 2;
@@ -118,7 +118,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                     Color32 c = new(255, 255, 192, 255);
 
                     // Get a reference to the vertex color
-                    var vertexColors = m_TextMeshPro.textInfo.meshInfo[materialIndex].colors32;
+                    Color32[] vertexColors = m_TextMeshPro.textInfo.meshInfo[materialIndex].colors32;
 
                     vertexColors[vertexIndex + 0] = c;
                     vertexColors[vertexIndex + 1] = c;
@@ -166,7 +166,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                         int vertexIndex = m_TextMeshPro.textInfo.characterInfo[characterIndex].vertexIndex;
 
                         // Get a reference to the vertex color
-                        var vertexColors = m_TextMeshPro.textInfo.meshInfo[meshIndex].colors32;
+                        Color32[] vertexColors = m_TextMeshPro.textInfo.meshInfo[meshIndex].colors32;
 
                         Color32 c = vertexColors[vertexIndex + 0].Tint(1.33333f);
 
@@ -202,7 +202,7 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
                         int vertexIndex = m_TextMeshPro.textInfo.characterInfo[characterIndex].vertexIndex;
 
                         // Get a reference to the vertex color
-                        var vertexColors = m_TextMeshPro.textInfo.meshInfo[meshIndex].colors32;
+                        Color32[] vertexColors = m_TextMeshPro.textInfo.meshInfo[meshIndex].colors32;
 
                         Color32 c = vertexColors[vertexIndex + 0].Tint(0.75f);
 
@@ -476,10 +476,10 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
 
             // Restore Vertices
             // Get a reference to the cached / original vertices.
-            var src_vertices = m_cachedMeshInfoVertexData[materialIndex].vertices;
+            Vector3[] src_vertices = m_cachedMeshInfoVertexData[materialIndex].vertices;
 
             // Get a reference to the vertices that we need to replace.
-            var dst_vertices = m_TextMeshPro.textInfo.meshInfo[materialIndex].vertices;
+            Vector3[] dst_vertices = m_TextMeshPro.textInfo.meshInfo[materialIndex].vertices;
 
             // Restore / Copy vertices from source to destination
             dst_vertices[vertexIndex + 0] = src_vertices[vertexIndex + 0];
@@ -489,10 +489,10 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
 
             // Restore Vertex Colors
             // Get a reference to the vertex colors we need to replace.
-            var dst_colors = m_TextMeshPro.textInfo.meshInfo[materialIndex].colors32;
+            Color32[] dst_colors = m_TextMeshPro.textInfo.meshInfo[materialIndex].colors32;
 
             // Get a reference to the cached / original vertex colors.
-            var src_colors = m_cachedMeshInfoVertexData[materialIndex].colors32;
+            Color32[] src_colors = m_cachedMeshInfoVertexData[materialIndex].colors32;
 
             // Copy the vertex colors from source to destination.
             dst_colors[vertexIndex + 0] = src_colors[vertexIndex + 0];
@@ -502,16 +502,16 @@ namespace TextMesh_Pro.Examples___Extras.Scripts
 
             // Restore UV0S
             // UVS0
-            var src_uv0s = m_cachedMeshInfoVertexData[materialIndex].uvs0;
-            var dst_uv0s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs0;
+            Vector2[] src_uv0s = m_cachedMeshInfoVertexData[materialIndex].uvs0;
+            Vector2[] dst_uv0s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs0;
             dst_uv0s[vertexIndex + 0] = src_uv0s[vertexIndex + 0];
             dst_uv0s[vertexIndex + 1] = src_uv0s[vertexIndex + 1];
             dst_uv0s[vertexIndex + 2] = src_uv0s[vertexIndex + 2];
             dst_uv0s[vertexIndex + 3] = src_uv0s[vertexIndex + 3];
 
             // UVS2
-            var src_uv2s = m_cachedMeshInfoVertexData[materialIndex].uvs2;
-            var dst_uv2s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs2;
+            Vector2[] src_uv2s = m_cachedMeshInfoVertexData[materialIndex].uvs2;
+            Vector2[] dst_uv2s = m_TextMeshPro.textInfo.meshInfo[materialIndex].uvs2;
             dst_uv2s[vertexIndex + 0] = src_uv2s[vertexIndex + 0];
             dst_uv2s[vertexIndex + 1] = src_uv2s[vertexIndex + 1];
             dst_uv2s[vertexIndex + 2] = src_uv2s[vertexIndex + 2];
